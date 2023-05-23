@@ -1,16 +1,75 @@
-L'introduction est une section requise dans un rapport technique. Introduisez votre travail, l'idée de départ et les objectifs attendus. Un lecteur qui découvrirait votre projet au travers de cette introduction devrait ainsi être capable d'en comprendre le cadre, l'idée générale et les aboutissants du projet.
 
 \section{Contexte}
-Cette section \underline{n'est pas obligatoire}, mais elle est souvent présente dans un rapport technique pour compléter l'introduction et définir le contexte du travail \cad le cadre formel dans lequel le travail est mené.
+Dans le courant de l'année 2020, le Professeur Yves Chevallier a réalisé une plateforme web permettant à ses élèves de réaliser des quiz interactifs. Cette plateforme a été réalisée à l'aide du framework PHP, Laravel pour le backend et du framework javascript, VueJs pour le frontend.
+
+Par la suite, un travail de Bachelor a été proposé afin que cette plateforme permette aux élèves d'y effectuer des travaux écrits. Cela apporte des avantages conséquents autant pour les professeurs que pour les élèves. En effet, la plateforme permet une correction partielle du travail écrit (notamment pour les questions QCM) mais elle permet également aux élèves d'écrire du code et de le compiler. Deux choses complétement impossibles avec des tests papiers.
+
 
 %%if
-\section{Citations et bibliographie}
-Citer vos sources est essentiel. Avec \texttt{biblatex} vous pouvez facilement citer des articles, des livres ou des sites internet. Toutes les citations dans le texte seront automatiquement regroupées en fin de document dans la section \guillemotleft Bibliographie\guillemotright. Par exemple, citons un article d'Einstein \cite{einstein} ou le livre de Dirac \cite{dirac}.
+\section{Situation}
+L'application web créée par le Professeur Yves Chevallier est open-source et peut être trouvé à l'adresse suivante : \url{https://github.com/heig-vd-tin/heig-quiz}. Voici le dernier \href{https://github.com/heig-vd-tin/heig-quiz/commit/28fb1ac5367931f6aa986041fb992c651c9816cd}{commit} au moment du début de mon travail.
 
-Parfois il peut être utile d'utiliser un gestionnaire de bibliographie. La communauté académique recommande l'outil \href{https://www.zotero.org/}{Zotero} qui permet de gérer une bibliothèque numérique d'ouvrages et de références numériques. Il permet également de générer une bibliographie compatible avec \LaTeX.
+L'ajout de travaux écrits a été en partie réalisée, mais elle est incomplète. Actuellement, le projet n'est pas complétement fonctionnel et la documentation contient pas mal de lacunes rendant la reprise de ce projet plus difficile que nécessaire. De plus, cette plateforme utilise d'anciennes versions de Laravel et de VueJs. Il convient donc de mettre ces technologies à jour.
 
-Notez qu'il est très facile d'obtenir l'extrait \texttt{bibtex} depuis des journaux. Sélectionnez \emph{export/citation}. Si vous le pouvez choisissez \texttt{bibtex}. Dans le cas d'un format \texttt{.ris}, utilisez un convertisseur en ligne comme \href{http://www.bruot.org/ris2bib/}{ris2bib}.
+\subsection{Environnements de développement}
+Comme mentionné précédemment, le code source de ce projet se trouve sur un seul repository Github open-source. Il s'agit donc d'un mono-repository. Il est également important de savoir que cette application a été dévelopée dans WSL2 (Windows Subsystem for Linux v2). Cela pose donc des problèmes si l'on souhaite participer à ce projet depuis un système d'exploitation Windows.
 
-\section{Adapter votre modèle}
-Ce document n'est qu'un modèle ayant pour but de revoir les quelques avantages de \LaTeX~ et les fonctionnalités qui pourraient vous être utiles pour rédiger un rapport académique. N'hésitez pas à supprimer les parties inutiles et à adapter ce modèle à vos besoins.
+C'est cependant une bonne chose de développer dans l'environnement WSL2 pour les utilisateurs de windows. En effet, les installations de dépendances y sont bien plus rapide et cela permet une meilleur collaboration avec les utilisateurs d'autres systèmes d'exploitation.
+
+\subsection{Backend}
+Le backend de cette application est une API REST. Il a été réalisée à l'aide du framework PHP, Laravel dans sa version 8. Cette est version est désormais quelque peu obsolète et il convient donc de la mettre à jour.
+
+\subsection{Frontend}
+Le frontend de cette application a été réalisée à l'aide du framework javascript, Vue.js dans sa version 2. Il utilise également un peu de Bootstrap et du CSS pour le style de l'application. Comme pour le backend, le frontend utilise des technologies qui sont désormais vieilllisante et il serait opportunt de les mettre à jour.
+
+\subsection{Base de données}
+La base de données utilisée par cette application est une base de données MySQL. Cette dernière tourne dans un container Docker, ce qui offre plus de flexibilité aux utilisateurs. En effet, il n'est pas nécessaire d'installer un serveur MySQL sur sa machine pour pouvoir utiliser cette application.
+
+\section{Cahier des charges}
+Il me parait maintenant important de définir quels sont les objectifs du projet.
+
+\subsection{Objectifs}
+Les objectifs principaux de ce travail de Bachelor s'organisent autour de deux axes :
+
+\begin{enumerate}
+    \item Le remaniement du code : comme mentionné précédemment, il est important de tenir le projet et la documentation à jour afin qu'il soit le plus simple possible à reprendre et à modifier. C'est pourquoi je vais me baser sur le code existant afin de réécrire cette plateforme avec les technologies détaillées au chapitre suivant.
+    \item L'ajout de l'algorithme Super Memo de Anki permettant ainsi aux élèves de se driller avec des quiz de révision ainsi que la finalisation de la gestion des travaux écrits. Pour rappel, l'algorithme Super memo permet de noter avec quelle facilité l'étudiant répond à une question. En fonction cette notation, la question reviendra plus ou moins souvent. Cela permet de tomber plus régulièrement sur des questions nous posant un problème. Dans notre cas, nous n'allons pas demander à l'élève de noter la difficulté de la question, mais nous allons nous baser sur le temps que ce dernier a mis à y répondre.
+\end{enumerate}
+
+Voici les objectifs tels que défini dans le cahier des charges :
+\subsection*{Objectifs fonctionnels}
+\begin{itemize}
+    \item Le projet doit avoir une documentation précise expliquant comment l'installer et le lancer
+    \item Un utilisateur doit pouvoir s'identifier à la plateforme à l'aide de son compte switchAAI
+    \item Un professeur doit pouvoir créer et ajouter des étudiants une classe
+    \item Un professeur doit pouvoir créer, via une interface, plusieurs types de questions :
+          \subitem – QCM
+          \subitem – Texte à trou
+          \subitem – Question à développement
+          \subitem – Question de code
+    \item Les questions utilisent un format markdown modifié et il doit donc y avoir une page de documentation expliquant comment créer chaque type de question.
+    \item Un professeur doit pouvoir créer et gérer un quiz contenant des questions
+    \item Un professeur doit pouvoir créer un travail écrit
+    \item Un professeur doit pouvoir planifier un travail écrit
+    \item Un travail écrit doit s'arrêter après la fin du temps imparti
+    \item Un professeur doit pouvoir lancer la correction automatiques des questions simples (QCM, texte à trou)
+    \item Une fois, le travail écrit corrigé, un professeur doit avoir accès aux statistiques de bonne réponse des questions.
+    \item Un élève doit pouvoir faire des quiz.
+    \item Un étudiant doit pouvoir utiliser le mode drill du quizz
+    \item Un élève doit pouvoir répondre aux questions d'un travail écrit
+    \item Un élève doit pouvoir compiler son code
+    \item Un élève doit pouvoir rendre son examen avant la fin du temps imparti
+\end{itemize}
+
+\subsection*{Objectifs non-fonctionnels}
+
+\begin{itemize}
+    \item L'interface doit être fluide et intuitive pour les utilisateurs
+    \item L'application doit être fonctionnelle et fiable
+    \item Un CI/CD doit être mis en place afin de faciliter la reprise du projet et son déploiement
+    \item L'application est open source et le code est hébergé sur GitHub
+    \item Les réponses d'un élève ne doivent pas pouvoir être modifiée après la fin de l'examen
+    \item Les questions de l'examen ne doivent pas être modifiables après l'examen en question
+    \item Les messages d'erreur doivent être clairs et compréhensibles pour l'utilisateur
+\end{itemize}
 %%fi
