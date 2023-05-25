@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net" modified="2023-05-25T20:50:32.727Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="P4jMJRd5RkbQGtL3T7ny" version="21.3.4">
+  <diagram name="Page-1" id="3j9Ng2dxhRBzdvQ4t3l0">
+    <mxGraphModel dx="1195" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="buExIWMHna82emhuYfHf-62" value="Utilisateurs" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.users;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="66" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-63" value="Frontend - Interface &lt;br&gt;utilisateur" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="240" y="50" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-64" value="Serveux Keycloak" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/database_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="640" y="50" width="41" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-65" value="Backend - API REST" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="450" y="50" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-66" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="160" as="sourcePoint" />
+            <mxPoint x="80" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-67" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="160" as="sourcePoint" />
+            <mxPoint x="280" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-68" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="160" as="sourcePoint" />
+            <mxPoint x="480" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-69" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="680" y="160" as="sourcePoint" />
+            <mxPoint x="680" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-70" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="197" as="sourcePoint" />
+            <mxPoint x="280" y="197" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-71" value="L&#39;utilisateur clique sur le bouton &lt;br&gt;pour se connecter" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-70">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="9" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-82" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="240" as="sourcePoint" />
+            <mxPoint x="80" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-83" value="L&#39;interface redirige l&#39;utilisateur &lt;br&gt;sur la route appropriée de l&#39;API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-82">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-19" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-84" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="280" as="sourcePoint" />
+            <mxPoint x="480" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-85" value="L&#39;utilisateur fait donc une requête GET sur cette route" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-84">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="18" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-86" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="320" as="sourcePoint" />
+            <mxPoint x="80" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-87" value="Cette route vérifie si l&#39;utilisateur est déjà connecté et s&#39;il ne l&#39;est pas, &lt;br&gt;il est redirigé sur la page de connexion du Keycloak" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-86">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-38" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-88" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="360" as="sourcePoint" />
+            <mxPoint x="680" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-89" value="L&#39;utilisateur rentre ses informations de connexion" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-88">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="57" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-90" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="681" y="440" as="sourcePoint" />
+            <mxPoint x="481" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-91" value="Lorsque l&#39;authentification est réussie, &lt;br&gt;l&#39;utilisateurs et les informations de &lt;br&gt;connexion sont envoyée à l&#39;API" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-90">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-20" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-92" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="480" as="sourcePoint" />
+            <mxPoint x="480" y="520" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="560" y="480" />
+              <mxPoint x="560" y="500" />
+              <mxPoint x="560" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-93" value="L&#39;API crée un cookie d&#39;authentification &lt;br&gt;et connecte l&#39;utilisateur" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-92">
+          <mxGeometry x="-0.425" relative="1" as="geometry">
+            <mxPoint x="43" y="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-94" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="560" as="sourcePoint" />
+            <mxPoint x="280" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-95" value="L&#39;utilisateur est ensuite redirigé sur &lt;br&gt;le frontend et le cookie est partagé &lt;br&gt;avec le frontend" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-94">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-19" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

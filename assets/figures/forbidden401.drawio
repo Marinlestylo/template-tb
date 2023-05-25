@@ -1,0 +1,81 @@
+<mxfile host="app.diagrams.net" modified="2023-05-25T21:01:52.093Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="PEasICJh0R1MPpFllD_B" version="21.3.4">
+  <diagram name="Page-1" id="3j9Ng2dxhRBzdvQ4t3l0">
+    <mxGraphModel dx="1195" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="buExIWMHna82emhuYfHf-62" value="Utilisateurs" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.users;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="66" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-63" value="Frontend - Interface &lt;br&gt;utilisateur" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="240" y="50" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-65" value="Backend - API REST" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="450" y="50" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-66" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="160" as="sourcePoint" />
+            <mxPoint x="80" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-67" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="160" as="sourcePoint" />
+            <mxPoint x="280" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-68" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="160" as="sourcePoint" />
+            <mxPoint x="480" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-70" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="197" as="sourcePoint" />
+            <mxPoint x="280" y="197" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-71" value="L&#39;utilisateur souhaite voir tous les quiz&lt;br&gt;&amp;nbsp;auxquels il a accès" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-70">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="19" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-96" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="240" as="sourcePoint" />
+            <mxPoint x="480" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-97" value="Requête GET sur l&#39;endpoint approprié" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-96">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="19" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-98" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="280" as="sourcePoint" />
+            <mxPoint x="280" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-99" value="L&#39;API renvoie une erreur 401" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-98">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-29" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-100" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="320" as="sourcePoint" />
+            <mxPoint x="80" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-101" value="Un message d&#39;erreur est &lt;br&gt;affiché en conséquence" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-100">
+          <mxGeometry x="-0.19" y="-5" relative="1" as="geometry">
+            <mxPoint x="-29" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

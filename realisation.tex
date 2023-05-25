@@ -1,0 +1,115 @@
+Dans cette partie du rapport, je vais fournir les détails des actions effecutée ainsi que leurs justifications J'exposerai également les défis et leur solution.
+\section{Gestion de projet et Github}
+Bien qu'un \emph{repository} Github existe déjà, j'ai fait le choix de partir d'une base vierge. J'ai donc créer un nouveau \emph{repository} ainsi que deux nouveaux projets pour le \emph{frontend} et le \emph{backend}. Il s'agit donc d'un \emph{mono-repo}, c'est quand un seul \emph{repository} contient plusieurs projects disctinct. En effet, il me semblait plus simple de partir d'une base nouvelle et de réutiliser les éléments du projet existant au fur et à mesure. De plus, cela me permet de savoir exactement de tout ce que contient le projet.
+
+Ce \emph{repository} est accessible \href{https://github.com/Marinlestylo/h-quiz}{en cliquant ici}. Il est structuré de la manière suivante :
+\begin{itemize}
+    \item \textbf{Un dossier api-backend} : contient le code du de notre API.
+    \item \textbf{Un dossier frontend} : contient le code de l'interface utilisateur.
+    \item \textbf{.gitignore} : Explicite tous les fichiers qui ne doivent pas être poussée sur GitHub.
+    \item \textbf{README.md} : Explique les technologies et comment lancer le projet.
+\end{itemize}
+
+\subsection{User stories}
+GitHub offre un système d'issue qui permet de signaler qu'une fonctionnalité doit être réalisée. Cela permet de garder une trace de ce qui doit être fait et de les marquer comme finie, une fois implémentée. Cela permet également de voir l'avancement du projet. Vous pouvez trouver la liste de toutes les issues ouvertes \href{https://github.com/Marinlestylo/h-quiz/issues}{ici}. Il est important de noter qu'a ce stade du projet, les issues ne sont pas encore toutes écrites.
+
+GitHub nous offre également une vue d'ensemble de toutes ces issues. En effet, grâce à la fonctionnalité \emph{Projects}, nous pouvons créer des projets et y ajouter des issues. Avec la vue "tableau", nous avons une vue d'ensemble de toutes les issues et trois colonnes : \emph{To do}, \emph{In progress} et \emph{Done}. On peut donc savoir ce qui est en cours de réalisation. Ces fonctionnalités sont incroyablement utiles lorsqu'on travaille en équipe. Même si elles sont légèrement moins importantes quand on est seul sur un projet, cela nous permet de mesuer l'avancement du projet. C'est pour ces raisons que j'ai décidé d'utiliser ces fonctionnalités.
+
+\subsection{Branches et commits}
+Pour ce qui est de la gestion des branches, j'ai décidé de rester très simple et d'utiliser que deux branches : \emph{main} et \emph{dev}. La branche \emph{main} est la branche principale. Elle doit être fonctionnelle à tout moment.
+
+La branche \emph{dev}, quant à elle, sera celle où je vais développer les fonctionnalités. Lorsque plusieurs fonctionnalités sont implémentées et sont entièrement fonctionnelle, je fusionne les branches dans \emph{main}.
+
+Je n'ai pas utilisé cette méthodologie de travaille dès le début du projet. En effet, j'ai commencé par travailler directement sur la branche \emph{main} afin d'avoir une base solide pour le projet. Une fois que l'API, sa connexion avec Keycloak et les communications entre le \emph{frontend} et le \emph{backend} étaient fonctionnelles, j'ai créé la branche \emph{dev} et j'ai adopté cette méthodologie de travail.
+
+Pour ce qui est des \emph{commits}, je me base sur les \href{https://www.conventionalcommits.org/en/v1.0.0/}{Conventional Commits}. Plus particulièrement, tous mes commits sont écrits en anglais et sont tous préfixés par un type.
+
+Les types que j'utilise sont les suivants :
+\begin{itemize}
+    \item feat : Une nouvelle fonctionnalité a été ajoutée.
+    \item fix : Une erreur a été corrigée.
+    \item docs : La documentation a été modifiée.
+    \item chore : Création d'un projet ou d'un dossier.
+    \item refactor : Refactorisation d'une partie du code.
+\end{itemize}
+
+\section{Architecture de l'application}
+Comme brièvement mentionné dans la section précédente, l'application est divisée en deux parties bien disctincte : le \emph{frontend} et le \emph{backend}. Le \emph{frontend} est l'interface utilisateur. C'est ce que l'utilisateur voit et avec quoi il interagit. Le \emph{backend} est une API REST. C'est cette API qui permet la communication avec la base de données et la gestion des utilisateurs.
+
+La communication entre le \emph{frontend} et le \emph{backend} se fait via des requêtes HTTP. Vous trouverez un schéma expliquant cette architecture  ci-dessous.
+
+\fig[H, width=14cm]{Architecture de la plateforme}{Architecture.drawio}
+
+Voici également un digramme de séquence expliquant ce qu'il se passe lorsque l'utilisateur veut accéder à une page qui affiche tous les quiz auxquels il a accès.
+
+\fig[H, width=14cm]{Diagramme de séquence pour l'affichage de tous les quiz}{ArchitectureSequence.drawio}
+
+Il est important de noter que dans ce diagramme, il n'y a pas encore de notion d'authentification. Cette notion sera expliquée dans la section suivante.
+
+\section{Authentification}
+Dans cette sous-section je vais expliquer comment a été gérée l'authentification via Keycloak.
+
+\subsection{Processus d'authentification}
+Pour implémenter l'authentification avec Keycloak, il y avait deux possibilités envisageables. La première option était de gérer la connexion avec Keycloak depuis le frontend. Cela implique que Keycloak retourne un token d'authentification au frontend et que ce dernier l'envoie à l'API à chaque requête. L'API vérifie ensuite la validité du token auprès du serveur Keycloak et renvoie une réponse en conséquence. Cette approche est parfaitement viable et est utilisée dans d'autre projet de la HEIG-VD.
+
+Le point faible de cette approche est que le \emph{frontend} et le \emph{backend} doivent tous les deux travailler avec Keycloak. Cela implique que si on veut changer de fournisseur d'identité, il faut modifier les deux parties de l'application.
+C'est pour cette raison qu'une autre approche a été mise en place où uniquement le \emph{backend} travaille avec Keycloak.
+
+Le digramme de séquence qui suit explique de façon détaillée quel est le processus d'authentification. A noter que le processus de déconnexion est identique.
+\fig[H, width=14cm]{Digramme de séquence pour l'authentification d'un utilisateur}{connexionFlow.drawio}
+
+Même si c'est un processus assez long et complexe, il a le grand avantage que le \emph{frontend} n'a aucune connexion directe avec le serveur d'authentification. Si nous décidons dans le futur de changer de fournisseur d'identité, il ne faudra modifier uniquement le \emph{backend}.
+
+\fig[H, width=14cm]{Accès à une ressource sans être authentifié}{forbidden401.drawio}
+
+Ce diagramme suivant illustre ce qu'il se passe lorsque l'utilisateur veut accéder à une page qui nécessite une connexion mais que ce dernier n'est pas encore authentifié. Il reçoit une erreur 401 \emph{Unauthorized}. C'est l'erreur standard pour indiquer qu'une ressource est protégée et que l'utilisateur doit être authentifié pour y accéder. A noter qu'un mécanisme similaire sera mis en place si un utilisateur authentifié tente d'accéder à une ressource qui lui est interdite. Par exemple, un étudiant qui tenterait d'accéder à une ressource réservée aux enseignants. L'erreur qu'il recevrait serait ici une erreur 403 \emph{Forbidden}.
+
+\subsection{Implémentation}
+Pour l'implémentation je me suis basé sur une librairie nommée \href{https://socialiteproviders.com/Keycloak/#installation-basic-usage}{socialiteproviders/keycloak}. Cette librairie permet de gérer l'authentification avec Keycloak dans Laravel. Je me suis également inspiré d'un \href{https://github.com/heig-vd-tin/fablab-name}{projet} du Professur Yves Chevallier qui utilise également cette librairie.
+
+En premier lieu, j'ai du modifier le fichier \emph{app/providers/EventServiceProvider.php} afin d'y rajouter un \emph{event listener}.
+\begin{listing}[H]
+    \inputminted{php}{assets/code/serviceProviderkeycloak.php}
+    \caption{EventServiceProvider \label{serviceProviderkeycloak}}
+\end{listing}
+
+Suite à cela, il faut créer deux routes pour le login et une pour le logout. Ces routes sont définies dans le fichier \emph{routes/api.php}.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/routeKeycloak.php}
+    \caption{Routes pour l'authentification Keycloak \label{routeKeycloak}}
+\end{listing}
+
+On peut voir que la route de déconnexion n'est accessible que par un utilisateur connecté pour éviter des erreurs.
+
+Finalement, j'ai créé un KeycloakController qui s'occupe de gérer la logique de l'authentification. Ce fichier se trouve dans \emph{app/Http/Controllers/KeycloakController.php}.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/keycloakController.php}
+    \caption{KeycloakController \label{keycloakController}}
+\end{listing}
+
+Dans ce controller, on va s'intéresser à trois méthodes :
+\begin{itemize}
+    \item \emph{redirect} : Cette méthode redirige l'utilisateur vers la page de login de Keycloak.
+    \item \emph{callback} : Cette méthode est appelée une fois que l'utilisateur s'est authentifié avec succès. Elle va ensuite créer ou modifier l'utilisateur dans la base de données. Finalement elle va rediriger l'utilisateurs vers le frontend.
+    \item \emph{logout} : Cette méthode va déconnecter l'utilisateur de Keycloak et le rediriger vers le frontend.
+\end{itemize}
+
+La dernière modification est faite dans le fichier \emph{app/Http/Middleware/Authenticate.php}. C'est à cet endroit que l'on va vérifier si l'utilisateur est authentifié. Si ce n'est pas le cas, on retourne une erreur 401.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/authenticate.php}
+    \caption{Renvoie de l'erreur 401 \label{authenticate}}
+\end{listing}
+
+
+\subsubsection{Modification de la base de données}
+Suite à cette implémentation, il m'a fallut faire des modifications dans la table \emph{users} de la base de données. En effet, les champs suivant ont été supprimés :
+\begin{itemize}
+    \item \emph{name} : Ce champ est une concaténation du nom et prénom de l'utilisateur. Il a donc été supprimés car ces informations sont redondantes.
+    \item \emph{password} : Ce champ n'existe tout simplement plus car nous ne stockons pas le mot de passe du Keycloak.
+    \item \emph{api\_token} : Ce champ n'existe plus.
+\end{itemize}
+
+De plus, j'ai rajouté le champ \emph{keycloak\_id} qui contient l'identifiant unique de l'utilisateur dans Keycloak. Ce champ est utilisé pour vérifier si l'utilisateur existe déjà dans la base de données. Si c'est le cas, on met à jour les informations de l'utilisateur. Sinon, on crée un nouvel utilisateur.

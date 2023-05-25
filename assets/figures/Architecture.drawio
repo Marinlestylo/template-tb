@@ -1,0 +1,73 @@
+<mxfile host="app.diagrams.net" modified="2023-05-25T15:19:55.789Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="Aq64x3FI0wD8UWH7WtFH" version="21.3.4">
+  <diagram name="Page-1" id="3j9Ng2dxhRBzdvQ4t3l0">
+    <mxGraphModel dx="1195" dy="633" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="buExIWMHna82emhuYfHf-49" value="Utilisateurs" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.users;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="66" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-50" value="Frontend - Interface &lt;br&gt;utilisateur" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="300" y="106.5" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-51" value="Base de données" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/database_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="660" y="226.5" width="41" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-52" value="Backend - API REST" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/web_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="570" y="100" width="40" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-53" value="Serveur Keycloak" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="510" y="236.5" width="28.000000000000004" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-54" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="120" y="136.5" as="sourcePoint" />
+            <mxPoint x="290" y="136.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-55" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="136.5" as="sourcePoint" />
+            <mxPoint x="560" y="136.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-56" value="Communication via des requêtes HTTP" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-55">
+          <mxGeometry x="0.25" y="2" relative="1" as="geometry">
+            <mxPoint x="-31" y="-18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-57" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="136.5" as="sourcePoint" />
+            <mxPoint x="670" y="216.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="670" y="136.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-58" value="Récupération des données" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-57">
+          <mxGeometry x="0.0615" y="-1" relative="1" as="geometry">
+            <mxPoint x="22" y="-30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-59" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="266.5" as="sourcePoint" />
+            <mxPoint x="580" y="186.5" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="580" y="266.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-60" value="Gestion de la connexion" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="buExIWMHna82emhuYfHf-59">
+          <mxGeometry x="-0.0182" relative="1" as="geometry">
+            <mxPoint x="-70" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="buExIWMHna82emhuYfHf-61" value="Affichage de &lt;br&gt;l&#39;interface utilisateur" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="100" width="130" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
