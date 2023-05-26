@@ -3,8 +3,8 @@ Le but de cette section est d'analsyer quels sont les besions des différents ut
 
 Dans un premier temps, il convient d'identifier quels seront les différents types d'utilisateurs de cette plateforme de quiz. Il y a selon moi deux types bien distinct d'utilisateurs :
 \begin{itemize}
-  \item Les étudiants
-  \item Les professeurs
+    \item Les étudiants
+    \item Les professeurs
 \end{itemize}
 
 Les premiers utilisent cette plateforme afin de répondre à des quizs. La forme de ces derniers peuvent varier entre un simple quiz pour valider un devoir, un drill dans le but de réviser un examen ou finalement l'examen en lui-même. Ils ont donc besoin d'une interface où ils peuvent voir et choisir un quiz parmi tous ceux dont l'accès leurs est autorisé. Il doit pouvoir répondre au quiz et dans le cadre d'un examen ou d'un devoir il doit pouvoir le rendre. Il doit également pouvoir naviguer dans le quiz.
@@ -24,51 +24,51 @@ Sur ce schéma, on constate que l'utilisation diffère drastiquement entre les d
 \subsection*{Besoins liés au mode drill}
 Dans ce tableau, je liste et numérote les besoins des utilisateurs.
 \begin{table}[h]
-  \begin{center}
-    \caption{Besoins des utilisateurs \label{Besoins}}
-    \begin{tabular}{|l|l|}
-      \hline
-      \textbf{} & \textbf{Besoins}                                                            \\
-      \hline
-      B1        & Choisir le sujets et le nombre de questions                                 \\
-      \hline
-      B2        & Choisir le temps que va durer le \emph{drill}                               \\
-      \hline
-      B3        & Lorsqu'on trouve une question facile, elle doit revenir moins fréquemment   \\
-      \hline
-      B4        & Lorsqu'on trouve une question difficile, elle doit revenir plus fréquemment \\
-      \hline
-      B5        & Contrôler les questions apparaissant de ce mode                             \\
-      \hline
-    \end{tabular}
-  \end{center}
+    \begin{center}
+        \caption{Besoins des utilisateurs \label{Besoins}}
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{} & \textbf{Besoins}                                                            \\
+            \hline
+            B1        & Choisir le sujets et le nombre de questions                                 \\
+            \hline
+            B2        & Choisir le temps que va durer le \emph{drill}                               \\
+            \hline
+            B3        & Lorsqu'on trouve une question facile, elle doit revenir moins fréquemment   \\
+            \hline
+            B4        & Lorsqu'on trouve une question difficile, elle doit revenir plus fréquemment \\
+            \hline
+            B5        & Contrôler les questions apparaissant de ce mode                             \\
+            \hline
+        \end{tabular}
+    \end{center}
 \end{table}
 
 Une fois ces besoins identifiés, il faut les lier aux différentes fonctionnalités de notre application.
 
 \begin{table}[h]
-  \begin{center}
-    \caption{Besoins des utilisateurs \label{Besoins}}
-    \begin{tabular}{|l|l|l|}
-      \hline
-      \textbf{} & \textbf{Fonctionnalités}                                                      & \textbf{Besoins lié} \\
-      \hline
-      F1        & Fournir une interface permettant de personnaliser le \emph{drill}             & B1, B2               \\
-      \hline
-      F2        & Sélecteur pour choisir le sujet et le nombre de questions                     & B1                   \\
-      \hline
-      F3        & Sélecteur pour choisir le temps que va durer le \emph{drill}                  & B2                   \\
-      \hline
-      F4        & Récupérer un nombre défini de questions en fonction de l'utilisateur          & B5                   \\
-      \hline
-      F5        & Calculer la fréquence de la question en fonction du temps de réponse          & B3, B4               \\
-      \hline
-      F6        & Calculer la fréquence de la question en fonction de son résultat              & B3, B4               \\
-      \hline
-      F7        & Editer une question pour la faire apparaitre ou non dans le mode \emph{drill} & B5                   \\
-      \hline
-    \end{tabular}
-  \end{center}
+    \begin{center}
+        \caption{Besoins des utilisateurs \label{Besoins}}
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{} & \textbf{Fonctionnalités}                                                      & \textbf{Besoins lié} \\
+            \hline
+            F1        & Fournir une interface permettant de personnaliser le \emph{drill}             & B1, B2               \\
+            \hline
+            F2        & Sélecteur pour choisir le sujet et le nombre de questions                     & B1                   \\
+            \hline
+            F3        & Sélecteur pour choisir le temps que va durer le \emph{drill}                  & B2                   \\
+            \hline
+            F4        & Récupérer un nombre défini de questions en fonction de l'utilisateur          & B5                   \\
+            \hline
+            F5        & Calculer la fréquence de la question en fonction du temps de réponse          & B3, B4               \\
+            \hline
+            F6        & Calculer la fréquence de la question en fonction de son résultat              & B3, B4               \\
+            \hline
+            F7        & Editer une question pour la faire apparaitre ou non dans le mode \emph{drill} & B5                   \\
+            \hline
+        \end{tabular}
+    \end{center}
 \end{table}
 
 
@@ -78,12 +78,12 @@ Dans cette sous-section, je vais détailler les différentes technologies qui se
 \subsection{Technologies présentes dans l'application}
 Je vais brièvement rappeler les choix technologiques qui ont déjà été pris pour ce projet :
 \begin{itemize}
-  \item Pour le SGBD : MySQL.
-  \item Pour le backend : le framework PHP, Laravel version 8.
-  \item Pour le frontend : le framework javascript, Vue.js version 2.
-  \item Pour le style de l'application: Bootstrap et CSS
-  \item Pour la connexion à l'application (SSO) : Shibboleth
-  \item Système de gestion de version : Github
+    \item Pour le SGBD : MySQL.
+    \item Pour le backend : le framework PHP, Laravel version 8.
+    \item Pour le frontend : le framework javascript, Vue.js version 2.
+    \item Pour le style de l'application: Bootstrap et CSS
+    \item Pour la connexion à l'application (SSO) : Shibboleth
+    \item Système de gestion de version : Github
 \end{itemize}
 
 \subsection{Choix technologiques}
@@ -94,18 +94,18 @@ MySQL est un système de gestion de bases de données relationnelles (SGBDR) ope
 
 Comme le montre le site web de ranking de SGBD DB-engines \cite{DBengines}, MySQL est le deuxième SGBD le plus populaire au monde. On voit également que sa place est plutôt fixe car le podium n'a pas bougé depuis plus d'un an.
 \begin{center} %TODO : Changer la taille de cette image
-  \begin{figure}[H]
-    \includegraphics[width=14cm]{./assets/figures/MySQLPopularity.png}
-    \caption{Popularité des différents SGBD dans le monde \label{MySQLPopularity.png}}
-  \end{figure}
+    \begin{figure}[H]
+        \includegraphics[width=14cm]{./assets/figures/MySQLPopularity.png}
+        \caption{Popularité des différents SGBD dans le monde \label{MySQLPopularity.png}}
+    \end{figure}
 \end{center}
 On voit également sur ce classement que les SGBD les plus populaires ont des scores assez similaire et ont tous deux de la marge sur leur concurent qui occupe la troisième place. Oracle étant un SGBDR légèrement plus populaire que MySQL, il aurait pu être intéressant de choisir ce SGBD.
 
 \begin{center}
-  \begin{figure}[H]%TODO : Changer la taille de cette image
-    \includegraphics[width=\textwidth]{./assets/figures/OracleVsMySql.png}
-    \caption{Comparaison entre Oracle et MySql \label{OracleVsMySql.png}}
-  \end{figure}
+    \begin{figure}[H]%TODO : Changer la taille de cette image
+        \includegraphics[width=\textwidth]{./assets/figures/OracleVsMySql.png}
+        \caption{Comparaison entre Oracle et MySql \label{OracleVsMySql.png}}
+    \end{figure}
 \end{center}
 Cependant comme montré dans l'article du site Integrate.io \cite{Integrate.io} les avantages sont minimes (des performances un peu meilleures et un sécuritée accrue). La license Oracle étant cependant très onéreuse, Oracle ne fait pas un bon candidat dans le cadre de ce travail de Bachelor.
 
@@ -116,17 +116,17 @@ Laravel est un framework web open-source, écrit en PHP, offrant une structure s
 Laravel fourni un ORM (Object Relational Mapping), appelé Eloquent permettant de gérer toutes les intercations avec la base de données. Il permet également de choisir avec quel type de SGBD nous souhaitons travailler et de changer ce dernier très rapidement grâce à des fichiers de configuration.
 Il propose un pattern architechturale très utilisé, le Modèle-Vue-Controller.
 \begin{center}
-  \begin{figure}[H]%TODO : Changer la taille de cette image
-    \includegraphics[width=\textwidth]{./assets/figures/MVCExplanation.png}
-    \caption{Représentation du MVC \label{MVCExplanation.png}}
-  \end{figure}
+    \begin{figure}[H]%TODO : Changer la taille de cette image
+        \includegraphics[width=\textwidth]{./assets/figures/MVCExplanation.png}
+        \caption{Représentation du MVC \label{MVCExplanation.png}}
+    \end{figure}
 \end{center}
 
 Sur cette capture, tirée du site Pusher \cite{MVC}, on peut voir les trois parties de ce système et comment elles interagissent.
 \begin{itemize}
-  \item Le Modèle est la partie responsable de la gestion des données ainsi que de la logique métier. C'est la seule partie du pattern qui interagit avec la base de données. Il représente les structures de données, et fourni au Controller des méthodes pour manipuler les données.
-  \item La vue est la partie qui gère de l'interface utilisateur. Elle affiche les données et permet également de récupérer les informations saisies par l'utilisateur notamment au travers de formulaires.
-  \item Le Controller est la partie qui lie le Modèle et la Vue. Il réagit aux inputs de l'utilisateur qui sont transmis par la Vue et va interroger, si nécessaire, le Modèle afin d'y metter à jours ou récupérer des données. C'est également lui qui détermine quelle est la Vue à afficher à l'utilisateur. C'est le responsable de la logique de l'application.
+    \item Le Modèle est la partie responsable de la gestion des données ainsi que de la logique métier. C'est la seule partie du pattern qui interagit avec la base de données. Il représente les structures de données, et fourni au Controller des méthodes pour manipuler les données.
+    \item La vue est la partie qui gère de l'interface utilisateur. Elle affiche les données et permet également de récupérer les informations saisies par l'utilisateur notamment au travers de formulaires.
+    \item Le Controller est la partie qui lie le Modèle et la Vue. Il réagit aux inputs de l'utilisateur qui sont transmis par la Vue et va interroger, si nécessaire, le Modèle afin d'y metter à jours ou récupérer des données. C'est également lui qui détermine quelle est la Vue à afficher à l'utilisateur. C'est le responsable de la logique de l'application.
 \end{itemize}
 Le MVC permet donc d'avoir une séparation distincte entre les différentes parties de notre application.
 
@@ -146,10 +146,10 @@ Une autre fonctionnalité très importante de ce framework est la capacité de c
 
 Les principaux concurrent du framework Vue.js sont React et Angular. Selon un sondage réalisé par StackOverflow \cite{StackoverflowSurvey} en 2022, React est plus populaire que Vue.js et Angular.
 \begin{center}
-  \begin{figure}[H]%TODO : Changer la taille de cette image
-    \includegraphics[width=\textwidth]{./assets/figures/VueVSReactVSAngular.png}
-    \caption{Popularité des framework web \label{VueVSReactVSAngular.png}}
-  \end{figure}
+    \begin{figure}[H]%TODO : Changer la taille de cette image
+        \includegraphics[width=\textwidth]{./assets/figures/VueVSReactVSAngular.png}
+        \caption{Popularité des framework web \label{VueVSReactVSAngular.png}}
+    \end{figure}
 \end{center}
 
 Comme Vue.js, React est un framework javascript performant et dipose d'une communauté active. Il aurait été un bon choix de technologie pour ce projet car plus utilisé dans l'industrie et disposant d'une plus grande communauté.
@@ -157,7 +157,7 @@ Comme Vue.js, React est un framework javascript performant et dipose d'une commu
 Cependant, comme pour Laravel, un changement de framework aurait imposé une charge de travail supplémentaire trop importante. De plus, Vue.js est plus simple à prendre en main et à utiliser que React. Il est donc plus adapté à un projet de cette envergure. Je vais donc utiliser la version 3.0 de Vue.js.
 
 \subsection{Tailwind CSS}
-Tailwind CSS est un framework CSS open-source très simple à installer et utiliser. Il favorise la création rapide d'interfaces utilisateur personnalisées. Contrairement à son principal concurrent Bootstrap, Tailwind CSS ne propose pas de composants prédéfinis. On y retrouve plutôt des classes utilitaires qui permettent de modifier rapidement le style d'un élément. Chaque classe est indépendante et ne représente qu'une fonctionnalité. Par exemple la classe "mb-4" permet d'ajouter une marge sur le bas d'un élément. Cela rend la personnalisation de l'interface utilisateur plus simple et plus rapide. On peut également créer ses propres classes utilitaires.
+Tailwind CSS \cite{TailwindCSS} est un framework CSS open-source très simple à installer et utiliser. Il favorise la création rapide d'interfaces utilisateur personnalisées. Contrairement à son principal concurrent Bootstrap, Tailwind CSS ne propose pas de composants prédéfinis. On y retrouve plutôt des classes utilitaires qui permettent de modifier rapidement le style d'un élément. Chaque classe est indépendante et ne représente qu'une fonctionnalité. Par exemple la classe "mb-4" permet d'ajouter une marge sur le bas d'un élément. Cela rend la personnalisation de l'interface utilisateur plus simple et plus rapide. On peut également créer ses propres classes utilitaires.
 
 Un détail important de ce framework est qu'il enlève tous les styles de base des navigateurs. Cela permet d'avoir une interface utilisateur cohérente sur tous les navigateurs.
 
@@ -166,7 +166,7 @@ Un autre point fort de ce framework est sa communauté active. En effet, Tailwin
 Les raisons qui ont fait que j'ai choisi Tailwind CSS sont sa simplicité d'utilisation, sa capacité de personnalisation. Bootstrap aurait été également un choix tout à fait valable. Cependant, pour avoir déjà travailler avec ces deux framework, j'ai une légère préférence pour Tailwind CSS.
 
 \subsection{Keycloak}
-Keycloak est une solution open-source de gestion d'identité et d'accès. Cela évite à notre application d'avoir à gérer les différents formulaires d'authentification, d'inscriptions ou de changement de mot de passes. Keycloak propose également une gestion des rôles et des permissions. Cela permet de définir des rôles pour les utilisateurs.
+Keycloak \cite{Keycloak} est une solution open-source de gestion d'identité et d'accès. Cela évite à notre application d'avoir à gérer les différents formulaires d'authentification, d'inscriptions ou de changement de mot de passes. Keycloak propose également une gestion des rôles et des permissions. Cela permet de définir des rôles pour les utilisateurs.
 
 Dans le cadre de ce projet, tous les utilisateurs sont des membres de la HEIG-VD. Les deux choix que nous avions étaient d'utiliser Keycloak (le système de l'école) ou SWITCH edu-ID basé sur Shibboleth (actuellement utilisé dans le projet).
 
@@ -186,38 +186,38 @@ Toutes ces raisons font que Github est la plateforme de gestion de version que j
 Dans la tableau ci-dessous, vous pouvez trouver la liste de toutes les technologies qui sont utilisée dans le cadre de ce projet ainsi que leur version.
 % Fais un tableau avec toutes les technologies utilisées dans le projet
 \begin{table}[h]
-  \begin{center}
-    \caption{Technologies utilisées lors du projet \label{stack}}
-    \begin{tabular}{|l|l|}
-      \hline
-      \textbf{Technologie} & \textbf{Version} \\
-      \hline
-      MySQL                & 8.0              \\
-      \hline
-      PHP                  & 8.2.6            \\
-      \hline
-      Composer             & 2.5.5            \\
-      \hline
-      Laravel              & 10               \\
-      \hline
-      Node                 & 18.15.0          \\
-      \hline
-      NPM                  & 9.5.0            \\
-      \hline
-      Vue.js               & 3                \\
-      \hline
-      Tailwind CSS         & 3.3.1            \\
-      \hline
-      WSL                  & 2                \\
-      \hline
-      Docker               & 20.10.22         \\
-      \hline
-      Ubuntu               & 22.04.2 LTS      \\
-      \hline
-      Keycloak local       & 21.1             \\
-      \hline
-      Github               & -                \\
-      \hline
-    \end{tabular}
-  \end{center}
+    \begin{center}
+        \caption{Technologies utilisées lors du projet \label{stack}}
+        \begin{tabular}{|l|l|}
+            \hline
+            \textbf{Technologie} & \textbf{Version} \\
+            \hline
+            MySQL                & 8.0              \\
+            \hline
+            PHP                  & 8.2.6            \\
+            \hline
+            Composer             & 2.5.5            \\
+            \hline
+            Laravel              & 10               \\
+            \hline
+            Node                 & 18.15.0          \\
+            \hline
+            NPM                  & 9.5.0            \\
+            \hline
+            Vue.js               & 3                \\
+            \hline
+            Tailwind CSS         & 3.3.1            \\
+            \hline
+            WSL                  & 2                \\
+            \hline
+            Docker               & 20.10.22         \\
+            \hline
+            Ubuntu               & 22.04.2 LTS      \\
+            \hline
+            Keycloak local       & 21.1             \\
+            \hline
+            Github               & -                \\
+            \hline
+        \end{tabular}
+    \end{center}
 \end{table}
