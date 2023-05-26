@@ -1,6 +1,8 @@
 Dans cette partie du rapport, je vais fournir les détails des actions effecutée ainsi que leurs justifications J'exposerai également les défis et leur solution.
 \section{Gestion de projet et Github}
-Bien qu'un \emph{repository} Github existe déjà, j'ai fait le choix de partir d'une base vierge. J'ai donc créer un nouveau \emph{repository} ainsi que deux nouveaux projets pour le \emph{frontend} et le \emph{backend}. Il s'agit donc d'un \emph{mono-repo}, c'est quand un seul \emph{repository} contient plusieurs projects disctinct. En effet, il me semblait plus simple de partir d'une base nouvelle et de réutiliser les éléments du projet existant au fur et à mesure. De plus, cela me permet de savoir exactement de tout ce que contient le projet.
+Bien qu'un \emph{repository} Github existe déjà, j'ai fait le choix de partir d'une base vierge. J'ai donc créer un nouveau \emph{repository} ainsi que deux nouveaux projets pour le \emph{frontend} et le \emph{backend}. Il s'agit donc d'un \emph{mono-repo}, c'est quand un seul \emph{repository} contient plusieurs projects disctinct. En effet, il me semblait plus simple de partir d'une base nouvelle et de réutiliser les éléments du projet existant au fur et à mesure. De plus, cela me permet de maitriser le projet dans son entièreté.
+
+Une fois le travail terminée, il sera intéressant faire une \emph{Pull Request} sur le \emph{repository} de base afin de toujours avoir accès à toutes les versions et commit ce projet dans sa totalité.
 
 Ce \emph{repository} est accessible \href{https://github.com/Marinlestylo/h-quiz}{en cliquant ici}. Il est structuré de la manière suivante :
 \begin{itemize}
@@ -22,7 +24,7 @@ La branche \emph{dev}, quant à elle, sera celle où je vais développer les fon
 
 Je n'ai pas utilisé cette méthodologie de travaille dès le début du projet. En effet, j'ai commencé par travailler directement sur la branche \emph{main} afin d'avoir une base solide pour le projet. Une fois que l'API, sa connexion avec Keycloak et les communications entre le \emph{frontend} et le \emph{backend} étaient fonctionnelles, j'ai créé la branche \emph{dev} et j'ai adopté cette méthodologie de travail.
 
-Pour ce qui est des \emph{commits}, je me base sur les \href{https://www.conventionalcommits.org/en/v1.0.0/}{Conventional Commits}. Plus particulièrement, tous mes commits sont écrits en anglais et sont tous préfixés par un type.
+Pour ce qui est des \emph{commits}, je me base sur les \emph{Conventional Commits} \cite{ConventionalCommits}. Plus particulièrement, tous mes commits sont écrits en anglais et sont tous préfixés par un type.
 
 Les types que j'utilise sont les suivants :
 \begin{itemize}
@@ -65,7 +67,7 @@ Même si c'est un processus assez long et complexe, il a le grand avantage que l
 Ce diagramme suivant illustre ce qu'il se passe lorsque l'utilisateur veut accéder à une page qui nécessite une connexion mais que ce dernier n'est pas encore authentifié. Il reçoit une erreur 401 \emph{Unauthorized}. C'est l'erreur standard pour indiquer qu'une ressource est protégée et que l'utilisateur doit être authentifié pour y accéder. A noter qu'un mécanisme similaire sera mis en place si un utilisateur authentifié tente d'accéder à une ressource qui lui est interdite. Par exemple, un étudiant qui tenterait d'accéder à une ressource réservée aux enseignants. L'erreur qu'il recevrait serait ici une erreur 403 \emph{Forbidden}.
 
 \subsection{Implémentation}
-Pour l'implémentation je me suis basé sur une librairie nommée \href{https://socialiteproviders.com/Keycloak/#installation-basic-usage}{socialiteproviders/keycloak}. Cette librairie permet de gérer l'authentification avec Keycloak dans Laravel. Je me suis également inspiré d'un \href{https://github.com/heig-vd-tin/fablab-name}{projet} du Professur Yves Chevallier qui utilise également cette librairie.
+Pour l'implémentation je me suis basé sur une librairie nommée Socialite Providers \cite{SocialiteProviders}. Cette librairie permet de gérer l'authentification avec Keycloak dans Laravel. Je me suis également inspiré du projet \emph{Fablab-name} \cite{FablabName} du Professur Yves Chevallier qui utilise également cette librairie.
 
 En premier lieu, j'ai du modifier le fichier \emph{app/providers/EventServiceProvider.php} afin d'y rajouter un \emph{event listener}.
 \begin{listing}[H]
@@ -113,3 +115,6 @@ Suite à cette implémentation, il m'a fallut faire des modifications dans la ta
 \end{itemize}
 
 De plus, j'ai rajouté le champ \emph{keycloak\_id} qui contient l'identifiant unique de l'utilisateur dans Keycloak. Ce champ est utilisé pour vérifier si l'utilisateur existe déjà dans la base de données. Si c'est le cas, on met à jour les informations de l'utilisateur. Sinon, on crée un nouvel utilisateur.
+
+\section{Deployement}
+Même si ce n'est pas listé dans les objectifs de ce projet, il est important de déployer ce projet afin de vérifier que les fonctionnalités de dernier ne fonctionnent pas uniquement en local. Le projet est actuellement déployer à l'adresse suivante : \url{https://h-quiz.heig-vd.site/}. A noter que ce nom de domaine n'appartient pas à la HEIG-VD.
