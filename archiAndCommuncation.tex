@@ -1,0 +1,36 @@
+\section{Architecture de l'application}
+Comme mentionné dans les chapitres précédents, l'application est divisée en deux parties bien distinctes : le \emph{frontend} et le \emph{backend}. Le \emph{frontend} est l'interface utilisateur. C'est ce que l'utilisateur voit et avec quoi il interagit. Le \emph{backend} est une API REST. C'est cette API qui permet la communication avec la base de données et la gestion des utilisateurs. La communication entre le \emph{frontend} et le \emph{backend} se fait via des requêtes HTTP.
+
+On trouve également deux autres serveurs avec lesquels l'API communique. Le premier est Keycloak, qui permet l'authentification avec les comptes utilisateurs de l'école. Le second est un serveur de code qui permet aux utilisateurs de la plateforme d'écrire du code et de le compiler.
+
+Vous trouverez un schéma expliquant cette architecture ci-dessous.
+
+\fig[H, width=14cm]{Architecture de la plateforme}{Architecture.drawio}
+
+\subsection{Communication standard}
+
+Voici également un digramme de séquence expliquant ce qu'il se passe lorsque l'utilisateur veut accéder à une page qui affiche tous les quiz auxquels il a accès.
+
+\fig[H, width=14cm]{Diagramme de séquence pour l'affichage de tous les quiz}{ArchitectureSequence.drawio}
+
+Il est important de noter que dans ce diagramme, il n'y a pas encore de notion d'authentification. Cette notion sera expliquée dans la section suivante.
+
+\section{Authentification}
+Dans cette sous-section, je vais expliquer comment a été gérée l'authentification via Keycloak.
+
+\subsection{Processus d'authentification}
+Pour implémenter l'authentification avec Keycloak, il y avait deux possibilités envisageables. La première option était de gérer la connexion avec Keycloak depuis le \emph{frontend}. Cela implique que Keycloak retourne un \emph{token} d'authentification au \emph{frontend} et que ce dernier l'envoie à l'API à chaque requête. L'API vérifie ensuite la validité du \emph{token} auprès du serveur Keycloak et renvoie une réponse en conséquence. Cette approche est parfaitement viable et est utilisée dans d'autres projets de la HEIG-VD.
+
+Le point faible de cette approche est que le \emph{frontend} et le \emph{backend} doivent tous les deux travailler avec Keycloak. Cela implique que si on veut changer de fournisseur d'identité, il faut modifier les deux parties de l'application.
+C'est pour cette raison qu'une autre approche a été mise en place où uniquement le \emph{backend} travaille avec Keycloak.
+
+Le digramme de séquence qui suit explique de façon détaillée quel est le processus d'authentification. À noter que le processus de déconnexion est identique.
+\fig[H, width=14cm]{Digramme de séquence pour l'authentification d'un utilisateur}{connexionFlow.drawio}
+
+Même si c'est un processus assez long et complexe, il a le grand avantage que le \emph{frontend} n'a aucune connexion directe avec le serveur d'authentification. Si nous décidons dans le futur de changer de fournisseur d'identité, il ne faudra modifier que le \emph{backend}.
+
+\subsection{Communication avec authentification}
+
+\fig[H, width=14cm]{Accès à une ressource sans être authentifié}{forbidden401.drawio}
+
+Ce diagramme illustre ce qu'il se passe lorsque l'utilisateur veut accéder à une page qui nécessite une connexion, mais que ce dernier n'est pas encore authentifié. Il reçoit une erreur 401 \emph{Unauthorized}. C'est l'erreur standard pour indiquer qu'une ressource est protégée et que l'utilisateur doit être authentifié pour y accéder. A noter qu'un mécanisme similaire sera mis en place si un utilisateur authentifié tente d'accéder à une ressource qui lui est interdite. Par exemple, un étudiant qui tenterait d'accéder à une ressource réservée aux enseignants. L'erreur qu'il recevrait serait ici une erreur 403 \emph{Forbidden}.

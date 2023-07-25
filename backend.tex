@@ -1,0 +1,49 @@
+\section{Keycloak}
+Pour l'implémentation, j'ai utilisé une librairie nommée Socialite Providers \cite{SocialiteProviders}. Cette librairie permet de gérer l'authentification avec Keycloak dans Laravel. Je me suis également inspiré du projet \emph{Fablab-name} \cite{FablabName} du Professeur Yves Chevallier qui utilise également cette librairie.
+
+En premier lieu, j'ai dû modifier le fichier \emph{app/providers/EventServiceProvider.php} afin d'y rajouter un \emph{event listener}.
+\begin{listing}[H]
+    \inputminted{php}{assets/code/serviceProviderkeycloak.php}
+    \caption{EventServiceProvider \label{serviceProviderkeycloak}}
+\end{listing}
+
+Suite à cela, il faut créer deux routes pour le \emph{login} et une pour le \emph{logout}. Ces routes sont définies dans le fichier \emph{routes/api.php}.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/routeKeycloak.php}
+    \caption{Routes pour l'authentification Keycloak \label{routeKeycloak}}
+\end{listing}
+
+On peut voir que la route de déconnexion n'est accessible que par un utilisateur connecté pour éviter des erreurs.
+
+Finalement, j'ai créé un \emph{KeycloakController} qui s'occupe de gérer la logique de l'authentification. Ce fichier se trouve dans \emph{app/Http/Controllers/KeycloakController.php}.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/keycloakController.php}
+    \caption{KeycloakController \label{keycloakController}}
+\end{listing}
+
+Dans ce \emph{Controller}, on va s'intéresser à trois méthodes :
+\begin{itemize}
+    \item \emph{redirect} : Cette méthode redirige l'utilisateur vers la page de login de Keycloak.
+    \item \emph{callback} : Cette méthode est appelée une fois que l'utilisateur s'est authentifié avec succès. Elle va ensuite créer ou modifier l'utilisateur dans la base de données. Finalement, elle va rediriger l'utilisateurs vers le \emph{frontend}.
+    \item \emph{logout} : Cette méthode va déconnecter l'utilisateur de Keycloak et le rediriger vers le \emph{frontend}.
+\end{itemize}
+
+La dernière modification est faite dans le fichier \emph{app/Http/Middleware/Authenticate.php}. C'est à cet endroit que l'on va vérifier si l'utilisateur est authentifié. Si ce n'est pas le cas, on retourne une erreur 401.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/authenticate.php}
+    \caption{Renvoie de l'erreur 401 \label{authenticate}}
+\end{listing}
+
+
+\subsubsection{Modification de la base de données}
+Suite à cette implémentation, il m'a fallu faire des modifications dans la table \emph{users} de la base de données. En effet, les champs suivants ont été supprimés :
+\begin{itemize}
+    \item \emph{name} : Ce champ est une concaténation du nom et prénom de l'utilisateur. Il a donc été supprimé car ces informations sont redondantes.
+    \item \emph{password} : Ce champ n'existe tout simplement plus, car nous ne stockons pas le mot de passe du Keycloak.
+    \item \emph{api\_token} : Ce champ n'existe plus.
+\end{itemize}
+
+De plus, j'ai rajouté le champ \emph{keycloak\_id} qui contient l'identifiant unique de l'utilisateur dans Keycloak. Ce champ est utilisé pour vérifier si l'utilisateur existe déjà dans la base de données. Si c'est le cas, on met à jour les informations de l'utilisateur. Sinon, on crée un nouvel utilisateur.
