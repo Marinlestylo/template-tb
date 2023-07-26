@@ -1,4 +1,36 @@
-\section{Keycloak}
+\section{Authentification}
+Comme mentionné dans le chapitre sur l'architecture du projet, l'authentification est gérée à l'aide de Keycloak et sera détaillée dans la suite de cette section.
+
+\subsection{Middleware}
+La protection de route était effecutée de deux manière différentes: soit avec un \emph{middleware} garantissant que l'utilisateur soit authentifié et possède le bon rôle, soit directement dans la méthode correspondante à la route. Centraliser cette vérification dans un \emph{middleware} s'avère beaucoup plus pratique C'est pourquoi un nouveau \emph{middleware} a été créé en s'inspirant grandement du \emph{middleware} déjà existant.
+
+Voila le fichier \emph{checkUserRole.php} créé dans le répertoire \emph{app/Http/Middleware/} qui effecute la vérification.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/checkUserRole.php}
+    \caption{Vérification du rôle utilisateur}
+\end{listing}
+
+Première, on vérifie si l'utilisateur est authentifié. Si ce n'est pas le cas, une erreur 401 est renvoyée. Si ce dernier est authentifié, on vérifie ensuite si son rôle correspond à celui requis. En cas de succès, la requête est autorisée à se poursuivre. Sinon, une erreur 403 est renvoyée.
+
+Une fois le \emph{middleware} créé, il faut l'enregistrer dans le fichier \emph{app/Http/Kernel.php} comme ceci :
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/addMiddleware.php}
+    \caption{Ajout du middleware}
+\end{listing}
+
+Enfin, pour l'utiliser sur un groupes de routes, il suffit de l'ajouter dans le fichier \emph{routes/api.php} comme ceci :
+\begin{listing}[H]
+    \inputminted{php}{assets/code/middlewareRoutes.php}
+    \caption{Utilisation du middleware}
+\end{listing}
+
+Dans la méthode \emph{middleware}, on choisi le nom puis on ajoute ":teacher" afin de vérifier que l'utilisateur soit un enseignant. Il est également possible de vérifier que l'utilisateur soit un étudiant en remplaçant ":teacher" par ":student".
+
+Finalement certaines routes doivent être accessible aux étudiants et aux enseignants. Pour cela, nous utilisons le \emph{middleware}, déjà existant, \emph{auth} qui vérifie de manière similaire que l'utilisateur est authentifié.
+
+\subsection{Keycloak}
 Pour l'implémentation, j'ai utilisé une librairie nommée Socialite Providers \cite{SocialiteProviders}. Cette librairie permet de gérer l'authentification avec Keycloak dans Laravel. Je me suis également inspiré du projet \emph{Fablab-name} \cite{FablabName} du Professeur Yves Chevallier qui utilise également cette librairie.
 
 En premier lieu, j'ai dû modifier le fichier \emph{app/providers/EventServiceProvider.php} afin d'y rajouter un \emph{event listener}.
@@ -7,14 +39,12 @@ En premier lieu, j'ai dû modifier le fichier \emph{app/providers/EventServicePr
     \caption{EventServiceProvider \label{serviceProviderkeycloak}}
 \end{listing}
 
-Suite à cela, il faut créer deux routes pour le \emph{login} et une pour le \emph{logout}. Ces routes sont définies dans le fichier \emph{routes/api.php}.
+Suite à cela, il faut créer deux routes pour le \emph{login} et également deux pour le \emph{logout}. Ces routes sont définies dans le fichier \emph{routes/api.php}.
 
 \begin{listing}[H]
     \inputminted{php}{assets/code/routeKeycloak.php}
     \caption{Routes pour l'authentification Keycloak \label{routeKeycloak}}
 \end{listing}
-
-On peut voir que la route de déconnexion n'est accessible que par un utilisateur connecté pour éviter des erreurs.
 
 Finalement, j'ai créé un \emph{KeycloakController} qui s'occupe de gérer la logique de l'authentification. Ce fichier se trouve dans \emph{app/Http/Controllers/KeycloakController.php}.
 
@@ -23,27 +53,62 @@ Finalement, j'ai créé un \emph{KeycloakController} qui s'occupe de gérer la l
     \caption{KeycloakController \label{keycloakController}}
 \end{listing}
 
-Dans ce \emph{Controller}, on va s'intéresser à trois méthodes :
+Dans ce \emph{Controller}, on va s'intéresser à ces quatre méthodes :
 \begin{itemize}
-    \item \emph{redirect} : Cette méthode redirige l'utilisateur vers la page de login de Keycloak.
-    \item \emph{callback} : Cette méthode est appelée une fois que l'utilisateur s'est authentifié avec succès. Elle va ensuite créer ou modifier l'utilisateur dans la base de données. Finalement, elle va rediriger l'utilisateurs vers le \emph{frontend}.
-    \item \emph{logout} : Cette méthode va déconnecter l'utilisateur de Keycloak et le rediriger vers le \emph{frontend}.
+    \item \emph{login} : Cette méthode redirige l'utilisateur vers la page de login de Keycloak.
+    \item \emph{callback} : Cette méthode est appelée une fois que l'utilisateur s'est authentifié avec succès sur le keycloak. Elle va ensuite créer ou modifier l'utilisateur dans la base de données. Finalement, elle va rediriger l'utilisateurs vers le \emph{frontend}.
+    \item \emph{logout} : Cette méthode redirige l'utilisateur vers le keycloak afin de le déconnecter.
+    \item \emph{afterLogout} : Cette méthode sera ensuite appelée après que l'utilisateur soit déconnecté et le renvoie vers le \emph{frontend}.
 \end{itemize}
 
-La dernière modification est faite dans le fichier \emph{app/Http/Middleware/Authenticate.php}. C'est à cet endroit que l'on va vérifier si l'utilisateur est authentifié. Si ce n'est pas le cas, on retourne une erreur 401.
+\section{Routes}
+Les routes sont configurées dans le fichier \emph{routes/api.php}
+\subsection{Méthodes HTTP et nom des routes}
+Il existe cinq méthodes HTTP principales qu'il est important d'utiliser de manière appropriée :
+\begin{itemize}
+    \item \emph{GET} : Permet de récupérer des données.
+    \item \emph{POST} : Permet de créer des données.
+    \item \emph{PUT} : Permet de modifier des données.
+    \item \emph{PATCH} : Permet de modifier partiellement des données.
+    \item \emph{DELETE} : Permet de supprimer des données.
+\end{itemize}
+
+Ce principe n'était pas toujours respecté dans l'ancienne version de l'API et a donc été modifié. L'exemple le plus parlant est le suivant :
 
 \begin{listing}[H]
-    \inputminted{php}{assets/code/authenticate.php}
-    \caption{Renvoie de l'erreur 401 \label{authenticate}}
+    \inputminted{php}{assets/code/routesMethod.php}
+    \caption{Utilisation des méthodes HTTP}
 \end{listing}
 
+Ces six routes apportaient de très légères modifications aux données et n'utilisaient pas la méthode appropriée. Il était donc plus logique de les factoriser en une seule route \emph{PATCH}.
 
-\subsubsection{Modification de la base de données}
-Suite à cette implémentation, il m'a fallu faire des modifications dans la table \emph{users} de la base de données. En effet, les champs suivants ont été supprimés :
-\begin{itemize}
-    \item \emph{name} : Ce champ est une concaténation du nom et prénom de l'utilisateur. Il a donc été supprimé car ces informations sont redondantes.
-    \item \emph{password} : Ce champ n'existe tout simplement plus, car nous ne stockons pas le mot de passe du Keycloak.
-    \item \emph{api\_token} : Ce champ n'existe plus.
-\end{itemize}
+Un autre détail concerne le nom des routes. En effet, il n'est pas utile de préciser la méthode HTTP dans le nom de la route. Cela permet de simplifier le nom des routes et de les rendre plus compréhensibles. Par exemple, la route \emph{DELETE} qui permettrait de supprimer un quiz, ne devrait pas s'appeller \emph{quizzes-delete} ou \emph{quizzes/delete} mais uniquement \emph{quizzes}.
 
-De plus, j'ai rajouté le champ \emph{keycloak\_id} qui contient l'identifiant unique de l'utilisateur dans Keycloak. Ce champ est utilisé pour vérifier si l'utilisateur existe déjà dans la base de données. Si c'est le cas, on met à jour les informations de l'utilisateur. Sinon, on crée un nouvel utilisateur.
+\subsection{Code de retour de l'API}
+Voici les différents codes de retour que les routes de l'API peuvent retourner :
+
+\begin{table}[H]
+    \centering
+    \caption{Codes de retours HTTP et leurs significations}
+    \begin{tabular}{|c|c|p{8cm}|} % Utilisation de p{8cm} pour définir une colonne avec une largeur fixe (8 cm) pour les descriptions
+        \hline
+        \textbf{Numéro} & \textbf{Nom}          & \textbf{Description}                                                                                                      \\
+        \hline
+        200             & OK                    & Requête réussie                                                                                                           \\
+        \hline
+        201             & Created               & Requête réussie - Une nouvelle ressource a été créée                                                                      \\
+        \hline
+        400             & Bad Request           & Requête invalide - Des données sont manquantes ou incorrectes                                                             \\
+        \hline
+        401             & Unauthorized          & Non autorisé - L'utilisateur doit se connecter pour accéder à la ressource                                                \\
+        \hline
+        403             & Forbidden             & Interdit - L'utilisateur connecté n'a pas les droits pour accéder à la ressource                                          \\
+        \hline
+        404             & Not Found             & Non trouvé - La ressource demandée n'a pas été trouvée                                                                    \\
+        \hline
+        500             & Internal Server Error & Erreur interne du serveur - Une erreur est survenue pendant le traitement de la requêt et le serveur ne peut pas la gérer \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Compilation du code}

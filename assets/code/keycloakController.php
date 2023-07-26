@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Auth;
-use Exception;
-use Socialite;
-use App\Models\User;
+[...]
 
 class KeyCloakController extends Controller
 {
-    public function redirect()
+    public function login(Request $request)
     {
+        $url = $request->input('redirect');
+        session()->put('url.intended', $url);
         return Socialite::driver('keycloak')->redirect();
     }
 
@@ -24,9 +20,8 @@ class KeyCloakController extends Controller
             'firstname' => $remote_user->user['given_name'],
             'lastname' => $remote_user->user['family_name'],
             'email' => $remote_user->email,
-            'gender'=>$remote_user->user['gender'],
-            'affiliation'=>$remote_user->user['affiliation'],
-            'unique_id'=> $remote_user->user['unique_id'],
+            'gender'=> 1,
+            'affiliation'=>'member;staff',
             'remember_token' => $remote_user->refreshToken,
         ]);
 
@@ -34,12 +29,16 @@ class KeyCloakController extends Controller
         return redirect(session()->get('url.intended', '/api'));
     }
 
-    public function login(Request $request)
+    public function logout()
     {
-        $url = $request->input('redirect');
-        session()->put('url.intended', $url);
-        return Socialite::driver('keycloak')->redirect();
+        Auth::logout();
+        $redirectUri = env('APP_URL')."/api/after";
+        return redirect(Socialite::driver('keycloak')
+                ->getLogoutUrl($redirectUri, env('KEYCLOAK_CLIENT_ID')));
     }
 
-    [...]
+    public function afterLogout()
+    {
+        return redirect(session()->get('url.intended', '/api'));
+    }
 }
