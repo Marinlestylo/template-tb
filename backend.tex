@@ -2,7 +2,7 @@
 Comme mentionné dans le chapitre sur l'architecture du projet, l'authentification est gérée à l'aide de Keycloak et sera détaillée dans la suite de cette section.
 
 \subsection{Middleware}
-La protection de route était effecutée de deux manière différentes: soit avec un \emph{middleware} garantissant que l'utilisateur soit authentifié et possède le bon rôle, soit directement dans la méthode correspondante à la route. Centraliser cette vérification dans un \emph{middleware} s'avère beaucoup plus pratique C'est pourquoi un nouveau \emph{middleware} a été créé en s'inspirant grandement du \emph{middleware} déjà existant.
+La protection de route était effectuée de deux manières différentes: soit avec un \emph{middleware} garantissant que l'utilisateur soit authentifié et possède le bon rôle, soit directement dans la méthode correspondante à la route. Centraliser cette vérification dans un \emph{middleware} s'avère beaucoup plus pratique. C'est pourquoi un nouveau \emph{middleware} a été créé en s'inspirant grandement du \emph{middleware} déjà existant.
 
 Voila le fichier \emph{checkUserRole.php} créé dans le répertoire \emph{app/Http/Middleware/} qui effecute la vérification.
 
@@ -20,7 +20,7 @@ Une fois le \emph{middleware} créé, il faut l'enregistrer dans le fichier \emp
     \caption{Ajout du middleware}
 \end{listing}
 
-Enfin, pour l'utiliser sur un groupes de routes, il suffit de l'ajouter dans le fichier \emph{routes/api.php} comme ceci :
+Enfin, pour l'utiliser sur un groupe de routes, il suffit de l'ajouter dans le fichier \emph{routes/api.php} comme ceci :
 \begin{listing}[H]
     \inputminted{php}{assets/code/middlewareRoutes.php}
     \caption{Utilisation du middleware}
@@ -111,4 +111,156 @@ Voici les différents codes de retour que les routes de l'API peuvent retourner 
     \end{tabular}
 \end{table}
 
+De plus amples détails concernant tout autre type de code de retour peuvent être trouvés sur ce site web : \cite{StatusCode}.
+
+\section{Questions}
+
+Dans cette partie, je vais rapidement détailler quelques spécificités concernant les questions.
+
+\subsection{Réponse de la question}
+Le champ qui stocke la réponse d'une question est de type \emph{JSON} offrant ainsi de nombreuses possibilités. Voici ce qui est stocké en fonction des questions :
+\begin{itemize}
+    \item \emph{Short-answer} : "\{"pattern": "", "expected": ""\}". \emph{pattern} correspond à une expression régulière et \emph{expected} à la réponse attendue.
+    \item \emph{Long-answer} : "\{"expected": ""\}". Uniquement la réponse attendue.
+    \item \emph{Code} : "\{"expected": ""\}". Uniquement la réponse attendue.
+    \item \emph{Multiple-choice} : "[1,2]" Un tableau contant les numéros des réponses attendues.
+    \item \emph{Fill-in-the-gaps} : {"0": "", "1": "", etc.} Avec à chaque fois la réponse attendue pour chaque trou.
+\end{itemize}
+
+\subsection{Correction automatique des questions}
+Lorsqu'un utilisateur répond à une question dans le cadre d'un quiz ou d'un examen, sa réponse est ensuite soumise à une validation automatique avant d'être enregistrée dans la base de données. Cette validation est effectuée par la méthode \emph{validate} du Modèle \emph{Question} qui se trouve dans le dossier \emph{app/Models/}. Le processus de validation est en grande partie repris de l'ancienne version de l'API, bien que certaines modifications aient été apportées. Plus précisément, La correction automatique des questions courtes ne fonctionnait pas totalement et il y a eu l'ajout de la correction automatique des questions de types \emph{code} et \emph{long-answer}.
+
+Voici l'implémentation des corrections automatiques :
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/questionValidation.php}
+    \caption{Correction automatique des questions}
+\end{listing}
+
+On constate que la validation automatique pour les deux derniers types de questions renvoie systématiquement \emph{false}. En effet, même si le résultat de la compilation du code est correct, cela ne garantit pas que le code lui-même est correct. Si la question demande une boucle \emph{for} allant de 1 à 9 et que l'étudiant écrit juste \emph{print(123456789)}. L'affichage sera correct, mais la réponse ne le sera pas pour autant. Pour les questions à développement, il n'est pas possible de simplement vérifier si la réponse est correcte ou non. On pourrait envisager donner la réponse à une intelligence artificielle pour qu'elle l'analyse, mais cela dépasse le cadre de ce travail.
+
+Par conséquent, étant donné que la correction automatique ne fournirait pas de résultat probant, il a été décidé de marquer ces questions comme incorrectes. L'enseignant examinera  ensuite sur les réponses des étudiants et les corrigera manuellement. Cette approche est justifiée car en cas d'oubli, l'étudiant ira sans doute réclamer ses points. Dans le cas contraire, il est peu probable que ce dernier signale avoir reçu trop de points.
+
+\section{Enumération}
+Lors de la création et modification de questions, il est essentiel de pouvoir sélectionner un type de question. Pour ce faire, il faut mettre en place une méthode capable de récupérer toutes les valeurs possibles, de cette énumération. Il en va de même pour la création de quiz. Cette récupération de valeur concerne les champs \emph{difficulty} et \emph{type} de la table \emph{questions} ainsi la table \emph{quizzes} avec son champ \emph{type}. Les \emph{endpoints} ci-dessous ont été ajouté afin de pouvoir récupérer ces valeurs.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/enumEndpoints.php}
+    \caption{Récupération des valeurs des énumérations}
+\end{listing}
+
+Comme ces opérations sont réalisées dans deux \emph{Controller} distincts, il a fallu trouver un moyen de factoriser le code. Aidé de cet arcticle \cite{HelperLaravel}, une fonction \emph{helper} a été mise en place. Pour ce faire, il suffit de créer un fichier \emph{helpers.php} dans le dossier \emph{app/}.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/enumValues.php}
+    \caption{Fonction helper}
+\end{listing}
+
+Pour pouvoir utiliser cette fonction, il faut l'ajouter dans le fichier \emph{composer.json} et ensuite lancer la commande "\emph{composer dump-autoload}". Une fois cette étape  effectuée, il est possible de faire appel à cette fonction depuis n'importe quel \emph{Controller}.
+
+
 \section{Compilation du code}
+Un avantage primordial des quiz et travaux écrits sur ordinateur est la possibilité de pouvoir compiler son code. Cela permet à l'étudiant de vérifier la validité de son code et de le corriger. Pour ce faire, je me suis inspiré du travail de M. Bouyiatiotis et ai décidé d'utiliser l'application \emph{Remote Code Compiler} \cite{RemoteCodeCompiler}. Il s'agit d'un projet \emph{open-source} développé et maintenu par l'utilsateur "Zakariamaaraki". Voici le \href{https://github.com/heig-vd-tin/heig-quiz/commit/28fb1ac5367931f6aa986041fb992c651c9816cd}lien du dernier {\emph{commit}} au moment de la réalisation de ce travail.
+
+\subsection{Fonctionnement de l'application}
+
+Cette application offre la possibilité de compiler du code dans divers langages de programmation tels que : \emph{Java, Kotlin, C, C++, C\#, Go, Python, Scala, Rust, Ruby} et \emph{Haskell}.
+Bien qu'elle soit relativement simple d'emploi, la documentation incomplète complexifie grandement son utilisation. En effet, l'absence d'exemple de requêtes HTTP et la documentation divergente entre le \emph{repository} Github et le \emph{Swagger} ralentisse grandement l'utilisation de cette application.
+
+Le processus d'installation de cette application est détaillé dans le fichier \emph{README.md} de mon \emph{repository} Github. Je vous invite donc à le consulter si vous souhaitez installer cette application.
+
+L'application fournit trois \emph{endpoints} utiles à notre projet :
+\begin{itemize}
+    \item \emph{GET: /languages} : Retourne un \emph{JSON} de tous les langages de programmation disponibles.
+    \item \emph{POST: /api/compile} : Permet de compiler et d'exécuter du code en envoyant des fichiers.
+    \item \emph{POST: /api/compile/json} : Permet de compiler et d'exécuter du code en passant les informations dans le corps de la requête.
+\end{itemize}
+
+
+Dans un premier temps, l'utilisation de l'\emph{endpoint} \emph{/api/compile/json} a été privilégié. Cependant après de nombreuses heures de rechercher et d'essais infructueux, il a été décidé d'opter pour l'utilisation de l'endpoint \emph{/api/compile}. En effet, je n'ai pas réussi à trouver comment envoyer les fichiers à compiler dans le corps de la requête.
+
+Les \emph{input} pour utiliser l'application sont les suivants :
+\begin{itemize}
+    \item \emph{inputFile} : Ce fichier est optionnel et contient les arguments passés au lancement du programme.
+    \item \emph{expectedOutputs} : Ce fichier est obligatoire et contient le résultat attendu du code.
+    \item \emph{sourcecode} : Ce fichier est obligatoire et contient le code à compiler.
+    \item \emph{language} : Il s'agit d'une chaine de caractère contenant le nom du langage de programmation.
+    \item \emph{memoryLimit} : Il s'agit du nombre de \emph{Mo} de mémoire alloué au programme.
+    \item \emph{timeLimit} : Il s'agit d'un nombre indiquant le temps d'exécution maximal autorisé en secondes.
+\end{itemize}
+
+La réponse renvoyée par le \emph{RemoteCodeCompiler} contient un verdict qui peut prendre les valeurs suivantes :
+\begin{itemize}
+    \item \emph{Accepted} : Cela veut dire que le résultat attendu est identique au résultat du code.
+    \item \emph{Wrong Answer} : Cela veut dire que le code compile correctement, mais que le résultat attendu diffère du résultat obtenu.
+    \item \emph{Compilation Error} : Une erreur est survenue durant la compilation du code.
+    \item \emph{Time Limit Exceeded} : Le temps limite d'exécution du code a été dépassé.
+    \item \emph{Runtime Error} : Une erreur est survenue durant l'exécution du code.
+    \item \emph{Out Of Memory} : Le code a utilisé plus de mémoire que celle qui lui était allouée.
+\end{itemize}
+
+\subsection{Implémentation de la compilation du code}
+Pour implémenter la compilation du code dans le projet, une route a donc été créée afin que l'utilisateur puisse envoyer le code qu'il souhaite compiler. Puisqu'il ne s'agit actuellement que d'un unique \emph{endpoint}, il ne semblait pas nécessaire de créer un \emph{Controller} pour la compilation du code. C'est donc le \emph{Controller} des activités qui a été utilisé. C'est en effet, dans le cadre d'une activité, qu'un étudiant voudra le plus souvent compiler son code.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/codeCompilation.php}
+    \caption{Compilation du code}
+\end{listing}
+
+Actuellement et par manque de temps, seule la prise en charge du langage \emph{Python} est mise en oeuvre. Il sera assez simple de rajouter les autres langages de programmation. En effet, il suffira de stocker le langage voulu dans le champ \emph{option} de la question et d'adapter l'url de compilation en conséquence. De plus, grâce à l'\emph{endpoint} recensant tous les langages supportés, il est possible de faire un sélecteur pour le choix de langage lors de la création de la question.
+
+Les valeurs de \emph{memoryLimit} et de \emph{timeLimit} sont stocké en dur dans le code. Cela ne faisait pas tellement de sens de les stocker dans un fichier d'environnement, car leur valeur dépend du langage et du contexte d'utilisation.
+
+
+\section{Le mode drill}
+Le mode \emph{drill} vise à faciliter l'apprentissage d'un sujet en répondant à des questions de manière répétée. L'idée est de permettre à l'étudiant de tomber plus fréquemment sur  des questions auxquelles il a du mal à répondre. L'algorithme \emph{SM-2} permet donc de calculer le moment optimal pour reposer une question à l'étudiant.
+
+\subsection{Algorithme}
+Pour bien comprendre l'algorithme, il faut d'abord comprendre quels en sont les paramètres.
+
+Le paramètre \emph{repetition} compte le nombre de fois consécutive où nous avons répondu correctement à la question. Il est initialisé à 0.
+Le paramètre \emph{interval} représente le nombre de jours entre deux répétitions. Il est initialisé à 1.
+Le paramètre \emph{easiness} représente le facteur de facilité. Il est initialisé à 2.5.
+Le paramètre \emph{rank} est indépendant d'une itération à l'autre. Il peut prendre des valeurs de 5 à 0, définies par l'utilisateur après avoir répondu à la question.
+\begin{itemize}
+    \item 5 : Réponse correcte et facile.
+    \item 4 : Réponse correcte, mais un peu plus difficile.
+    \item 3 : Réponse correcte, mais l'utilisateur a eu de la peine à trouver la réponse.
+    \item 2 : Réponse incorrecte, mais l'utilisateur aurait pu trouver la réponse.
+    \item 1 : Réponse incorrecte et l'utilisateur aurait assez difficilement pu trouver la réponse.
+    \item 0 : Réponse incorrecte et l'utilisateur n'aurait pas pu trouver la réponse.
+\end{itemize}
+Dans notre cas, le rang sera défini en fonction du temps mis à répondre et de si la réponse est correcte. Les détails concernant le calcul du rang se trouvent dans la section suivante.
+
+Si l'utilisateur répond correctement une fois alors l'\emph{interval} prend la valeur 1, s'il répond correctement deux fois de suite alors l'\emph{interval} prend la valeur 6. S'il répond correctement trois fois de suite ou plus l'\emph{interval} prendra la valeur \emph{interval} * \emph{easiness}. Tant qu'il répondra correctement alors l'\emph{interval} continuera à augmenter. Cependant, en cas d'erreur alors l'\emph{interval} reprendra la valeur 1 et la \emph{repetition} retombe à 0.
+
+A la fin de chaque itération, le paramètre \emph{easiness} évolue lui aussi grâce à cette formule :
+
+\[
+    easiness' = max(1.3, easiness + \left(0.1 - (5 - rank) \times \left(0.08 + (5 - rank) \times 0.02\right)\right))
+\]
+
+Finalement, on calcule la prochaine apparition de la question en ajoutant l'\emph{interval} à la date actuelle.
+
+Ces explications ainsi que l'implémentation qui suit sont basées sur l'article de Supermemo \cite{supermemo}.
+
+\subsection{Implémentation}
+Dans un permier temps, un nouveau \emph{Controller} a été créé afin de gérer le mode \emph{drill}. Ce dernier contient deux méthodes principales et une méthode interne :
+
+La première permet à un étudiant de récupérer toutes les questions publiques contenants un certain mot-clés.
+
+\begin{listing}[H]
+    \inputminted{php}{assets/code/allQuestion.php}
+    \caption{Récupération des questions en fonction d'un mot-clé}
+\end{listing}
+Si l'étudiant a déjà vu une question dans le mode \emph{drill} alors l'API récupére les données correspondantes dans la base de données. Sinon elle crée de nouvelle données dans la base, garantissant ainsi une sélection de toutes les questions disponibles.
+
+La deuxième méthode permet de répondre à l'une de ces questions.
+\begin{listing}[H]
+    \inputminted{php}{assets/code/answerDrill.php}
+    \caption{Réponse à une question en mode drill}
+\end{listing}
+
+Dans un premier temps, on va calculer le rang de la question. La méthode interne \emph{getRank} permet de calculer un rang de facilité à partir du temps de réponse et de si la réponse est correcte. En effet, chaque 20 secondes le rang se décrémente d'une unité. Si le temps surpasse les 40 secondes, alors le rang aura une valeur maximale de 3. Si la réponse est incorrecte, le rang se décrémente de 3 unités. Les rangs de valeurs 5,4,3 représente donc une bonne réponse, tandis que les rangs de 2 à 0 représente une mauvaise réponse.
+
+Finalement, en fonction de ce rang, on calcule la prochaine apparition de cette question et on retourne ces informations.
