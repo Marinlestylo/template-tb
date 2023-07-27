@@ -5,6 +5,7 @@
 ]{heig-tb}
 
 \usepackage[nooldvoltagedirection,european,americaninductors]{circuitikz}
+\usepackage{pdfpages}
 
 \signature{jFriedli.svg} % Remplacer par votre propre signature vectorielle.
 
@@ -88,8 +89,12 @@
 \clearpage
 \printbibliography
 
-% \appendix
-% \appendixpage
+\appendix
+\appendixpage
+% \fig[H]{Cahier des charges}{cdc.pdf}
+% \fig[H]{Planification du projet}{planif.pdf}
+\includepdf[pages=-]{./assets/figures/cdc.pdf}
+\includepdf[pages=-]{./assets/figures/planif.pdf}
 % \addappheadtotoc
 
 %%if
