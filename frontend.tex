@@ -1,17 +1,3 @@
-\section{Structure du frontend}
-Pour commencer ce chapitre, je pense qu'il est important de préciser la structure de cette partie du projet. Le code se trouve dans le dossier \emph{src} du projet.
-Il est organisé de la manière suivante :
-\begin{itemize}
-    \item \emph{assets} : Contient toutes les images utilisée dans le projet.
-    \item \emph{components} : Contient tous les composants qui seront utilisés dans les vues.
-    \item \emph{middleware} : Contient le middleware permettant de vérifier si l'utilisateur est connecté ou non et quels sont ses droits.
-    \item \emph{router} : Contient la liste de toutes les routes de l'application
-    \item \emph{stores} : Contient les fichiers permettant de gérer les données du \emph{frontend} et le code permettant de faire des requêtes à l'API.
-    \item \emph{views} : Contient les différentes vues de l'application.
-\end{itemize}
-
-Cette structure organisée permet de faciliter la maintenance et la reprise du projet en répartissant les différents éléments dans les dossiers appropriés.
-
 \section{Communication avec le backend}
 La communication entre le \emph{frontend} et le \emph{backend} s'effectue à l'aide de requêtes \emph{fetch}. Étant donné que de nombreux composants du \emph{frontend} ont besoin de communiquer avec le \emph{backend}, un fichier \emph{utils.js} a été dans le dossier \emph{src} contenant une fonction permettant de faire des requêtes \emph{fetch} à l'API. Cette approche de centralisation permet de factoriser le code et de faciliter d'éventuelles modifications ultérieures.
 

@@ -1,9 +1,143 @@
-C'est la première fois que j'ai dû faire un vrai travail de \emph{refactor} sur un gros projet. Cela s'est avéré plus complexe que ce à quoi je m'attendais. En effet, chaque développeur à son propre fonctionnement et ses propres habitudes et c'est souvent ardu de bien comprendre ce qu'ils ont fait.
+\section{Bilan}
+Il est maintenant temps de dresser le bilan de ce travail.
+\subsection{Perte de fonctionnalités}
+Malgré l'ajout de nombreuses fonctionnalités, il y en a trois grosses qui n'ont pas pu être reprises du projet originel, faute de temps. Bien que ces fonctionnalités ne fassent pas partie du cahier des charges, il est tout de même regrettable de ne pas avoir pu les réaliser.
 
-De plus, ce projet me permet mieux me rendre compte de l'importance capitale de la documentation lors de la reprise d'un projet existant. La documentation est souvent une partie du travail qui n'est pas du tout appréciée et qu'on a tendance de laisser de côté. J'espère que la personne qui reprendra ce projet aura plus de facilité que moi à le faire.
+La première fonctionnalité permettait de visualiser l'avancement des étudiants ainsi que leurs réponses durant un quiz. Une page a été prévue à cet effet, mais elle n'affiche qu'un message statique.
 
-% TODO dire les fonctionnalités qui ont été perdues
-% List de toutes les fonctionnalités
+La deuxième est la gestion des images et du Markdown. En effet, actuellement, le corps des questions est affiché uniquement avec du texte.
+
+La dernière est le fait qu'un étudiant ne puisse pas consulter son quiz/examen à après que ce dernier soit terminé.
+
+\subsection{Erreurs restantes et bugs}
+L'interface propose deux boutons lors de la création d'une activité. L'un permettant de mélanger les questions du quiz et l'autre les réponses des questions à choix multiple ou du texte à trou. Ces deux fonctionnalités ne sont actuellement pas prise en charge.
+
+Comme évoqué, dans la section sur le déploiement, la version en ligne de l'application ne fait pas la distinction entre les étudiants et les enseignants. De plus, le docker permettant la compilation de code n'est pas mis en ligne. De ce fait, la version en ligne ne peut pas "compiler" son code.
+
+Sur la page des activités, lorsqu'un enseignant modifie ou essaie de modifier une activité, une \emph{popup} s'affiche en bas à droite de son écran. Cette dernière devrait rester affichée durant 3-4 secondes avant de disparaitre. Pour une raison que j'ignore, elle reste souvent moins d'une demi-seconde.
+
+Actuellement un enseignant à accès aux pages faites uniquement pour les élèves. L'idée derrière ceci était de pouvoir leur mettre à disposition une vue étudiante. Cependant, puisque cela n'est pas encore fait, la page de \emph{Drill} ne fonctionne pas correctement pour un enseignant.
+
+Si aucune réponse n'est soumise lors d'un quiz/examen alors la page de résultat de ce denier a une erreur 500.
+
+\subsection{Liste des fonctionnalités}
+Voici un récapitulatif des fonctionnalités disponibles dans l'application. Cela permettra de savoir précisément à quels objectifs du cahier des charges nous avons répondu.
+
+\subsubsection{fonctionnalités pour les enseignants}
+\begin{itemize}
+    \item Il peut se connecter avec son compte de l'école
+    \item Il peut créer un \emph{roster}
+    \item Il peut ajouter de supprimer des étudiants de ce \emph{roster} s'il en est le créateur.
+    \item Il peut voir tous les \emph{rosters} existants.
+    \item Il peut créer des questions de cinq types différents : Réponse courte, question à développement, texte à trous, Code et question à choix multiples.
+    \item Il peut modifier la question à condition d'en être le créateur.
+    \item Une \emph{preview} de la question s'affiche si elle est correctement formée.
+    \item Il peut ajouter des mot-clés à sa question.
+    \item Il peut gérer la visibilité de sa question.
+    \item Des champs personnalisés sont présent en fonction du type de la question.
+    \item Il peut créer un quiz standard ou un examen.
+    \item Il peut voir tous les quiz/examens existants.
+    \item Il peut ajouter et supprimer des questions dans ses quiz/examens
+    \item Il ne peut pas ajouter des questions privées d'autres enseignant dans son quiz/examen.
+    \item Il peut ajouter ses questions privées dans ses quiz/examens.
+    \item Il peut consulter les questions des autres profs. Qu'elles soient privées ou non.
+    \item Il ne peut pas faire d'activité à partir d'examen d'autres enseignants.
+    \item Il peut créer une activité à partir du quiz d'un autre enseignant. Ceci même si ce dernier contient une ou plusieurs questions privées.
+    \item Il peut choisir la classe et le temps que vont durer le quiz/examen.
+    \item Il ne peut pas modifier l'activité d'un autre enseignant.
+    \item Il peut voir toutes les activités qui ont été créées.
+    \item Il peut décider de cacher ou de rendre visible son activité. Il peut également décider de l'ouvrir et de la lancer.
+    \item Il peut supprimer son activité uniquement si elle n'est pas ni ouverte ni lancée.
+    \item Il peut lancer l'une de ses activités.
+    \item Il peut voir le temps restant avant la fin de l'activité.
+    \item Il a accès à la page de résultat de son quiz/examen, mais n'a pas accès à celles des autres enseignants.
+    \item Il a accès à une page de documentation sur l'utilisation de l'application et la création de questions.
+\end{itemize}
+
+\subsubsection{fonctionnalités pour les étudiants}
+\begin{itemize}
+    \item Il peut se connecter avec son compte de l'école.
+    \item Il peut voir toutes ses activités.
+    \item Il peut répondre à des questions lors d'un quiz/examen.
+    \item Il peut voir le temps restant avant la fin de l'examen.
+    \item Si le temps du quiz/examen est écoulé, la réponse en cours d'édition est sauvegardée automatiquement et l'étudiant est redirigé vers la page des activités.
+    \item Les réponses qu'il soumet sont corrigées automatiquement.
+    \item Il peut rendre son examen en avance s'il le souhaite.
+    \item Il peut compiler son code lors d'un quiz/examen.
+    \item A la fin de son examen, il peut voir la note qu'il a obtenu en fonction de la correction automatique
+    \item Il peut choisir un mot-clé dans le mode \emph{drill}.
+    \item Il peut répondre à des questions dans le mode \emph{drill}.
+    \item Il peut également compiler son code lors d'un \emph{drill}.
+    \item Il peut voir la bonne réponse de la question lors du \emph{drill}.
+    \item Il peut voir si sa réponse a été comptabilisée comme correcte.
+    \item S'il répond correctement à une question, cette dernière reviendra moins fréquemment.
+    \item S'il répond mal à une question, cette dernière reviendra plus fréquemment.
+\end{itemize}
+
+\subsection{Comparaison avec le cahier des charges}
+En examinant les objectifs du cahier des charges, consultable en annexe, on constate qu'ils sont tous atteints à l'exception de trois d'entre eux. Cela est à du certains problèmes durant ce projet, notamment le docker de compilation du code ainsi que WSL, qui ont conduit à un maque de temps.
+
+Le premier est "Un professeur doit pouvoir planifier un travail écrit". En effet, si l'on considère que planifier veut dire que l'examen est censé s'ouvrir automatiquement à un moment donné alors cet objectif n'est pas atteint. Cependant, un enseignant peut sans problème créer un quiz ou un examen et le rendre disponible lui-même au moment souhaité, ce qui répond partiellement à cet objectif.
+
+Les deux autres objectifs sont dans la catégorie "Objectifs non-fonctionnels". Il s'agit des objectifs concernant l'intégrité des questions et des réponses de l'examen. Les réponses des élèves sont actuellement non modifiables via l'application, mais pourraient être modifiées en cas d'accès à la base de données. Quant à la protection des questions, une section y est consacrée dans le chapitre 5.
+
+Je considère que tous les autres objectifs sont atteints.
+
+\subsection{Améliorations futures}
+Je vais, dans cette section, énumérer quelques fonctionnalités qui pourraient être envisagées pour la suite du projet.
+
+Dans un premier temps, il faudrait une page permettant à un enseignant de modifier les points attribués par la correction automatique.
+
+
+Actuellement, tous les textes de l'application sont en français, il serait utile de stocker ces textes dans un fichier de ressources, facilitant ainsi leur traduction et permettant aux utilisateurs de choisir la langue de leur choix.
+
+Concernant la correction automatique des questions, on pourrait envisager l'utilisation d'une intelligence artificielle qui se baserait sur des mots-clés afin de vérifier si une question à développement est plutôt correcte ou complétement hors-sujet.
+
+La création de question étant assez complexe, on pourrait également envisager un système basé sur une intelligence artificielle qui créerait des questions concernant certains mots-clés.
+
+La création de mots-clés et de cours serait également un bon point.
+
+\section{Sources}
+Lors d'un travail comme celui-ci, avec autant de recherche d'information, il est impensable de citer toutes les pages de tous les forums consultés. En effet, cette liste serait démesurément longue et peu pertinente. À noter que les articles les plus importants pour ce travail sont bien évidemment répertorié dans la bibliographie.
+
+Il m'est en revanche possible de citer les sites et forums qui ont énormément facilité ces recherches.
+
+\begin{itemize}
+    \item Bien que déjà citée, la documentation de Laravel \cite{Laravel} a été une ressource clé tout au long de ce projet.
+    \item Il en est de même pour la documentation de Vue.js \cite{Vuejs}.
+    \item Stack overflow \cite{stackoverflow}, le forum le plus utilisé par les informaticiens.
+    \item Vue-router \cite{vueRouter} pour la partie \emph{routing} du \emph{frontend}
+    \item Pinia \cite{pinia} pour la gestion des \emph{stores}.
+    \item TailwindCSS \cite{TailwindCSS} pour le design
+    \item Flowbite \cite{flowbite} pour l'inspiration et le design.
+    \item La plateforme des TB de la HEIG-VD \cite{plateformeTB} pour les sources d'inspiration concernant l'affiche et la structure du rapport.
+\end{itemize}
+
+\section{Code source du projet}
+Le code complet du projet est disponible en annexe dans un dossier compressé. Voici également le dernier \href{https://github.com/Marinlestylo/h-quiz/commit/c1d3a0b859ff09c4d6cca360570cc6c979690d3b}{\emph{commit}} du projet. Le \emph{repository} restera publique. Quant au site web, il sera hébergé jusqu'a la défense orale de ce travail. Après quoi, il sera très probablement mis hors-ligne.
+La documentation présente dans le \emph{README} devrait être bien suffisante pour permettre à de nouvelles personnes de reprendre ce projet.
+
+\section{Remerciements}
+Dans cette section, je souhaite exprimer ma gratitude envers toutes les personnes qui m'ont soutenu et aidé tout au long de ce projet.
+
+Je tiens tout d'abord à exprimer ma gratitude envers Monsieur Yves Chevallier pour son suivi tout au long de ce projet. En effet, les ressources qu'il a mises à ma disposition m'ont été d'une aide précieuse. De plus, l'autonomie qu'il m'a laissée m'a permis de mieux développer mes compétences de résolution de problèmes.
+
+Je tiens également à remercier Monsieur Benjamin Wolf, pour toute l'aide qu'il a pu m'apporter lors de l'utilisation du serveur Keycloak de l'école sur la version en ligne de l'application.
+
+Pour finir, je souhaiterais remercier mes collègues et amis, pour leur soutient moral infaillible et plus particulièrement Maxime Scharwath pour l'aide lors du déploiement de l'application ainsi que Lazar Pavicevic pour ses conseils concernant certaines parties du rapport.
+
+\section{Conclusion finale}
+Malgré quelques objectifs non atteints, le \emph{refactor} de l'application est désormais fonctionnel et peut être déployé avec succès. De plus, grâce à la documentation actuelle, la reprise de ce projet devrait être bien plus facile qu'elle ne le fut pour moi. En effet, je pense que la documentation présente sur le \emph{repository} github permet une reprise rapide et efficace de cette application.
+
+D'un point de vue plus personnel, je suis déçu de ne pas avoir pu développer toutes les fonctionnalités attendues, notamment concernant l'intégrité des données.
+
+C'est en effet, la première fois que j'ai dû faire un vrai travail de \emph{refactor} sur un gros projet. Cela s'est avéré bien plus complexe que ce à quoi je m'attendais. En effet, chaque développeur à son propre fonctionnement et ses propres habitudes et c'est souvent ardus de bien comprendre leur méthode de travail.
+
+De plus, ce projet me permet mieux me rendre compte de l'importance capitale de la documentation lors de la reprise d'un projet existant. Cette dernière est souvent une partie du travail qui n'est pas du tout appréciée et qu'on a tendance de laisser de côté.
+
+Je suis convaincu que cette expérience m'a permis de développer mes compétences en \emph{refactoring} de code, ainsi que de renforcer mon autonomie et ma capacité à résoudre des problèmes complexes.
+
+J'espère sincèrement que ce projet sera repris et utilisé par la suite.
 
 \vfil
 \hspace{8cm}\makeatletter\@author\makeatother\par
