@@ -1,2 +1,42 @@
-\section{Deployement}
-Même si ce n'est pas listé dans les objectifs de ce projet, il est important de déployer ce projet afin de vérifier que les fonctionnalités de dernier ne fonctionnent pas uniquement en local. Le projet est actuellement déployé à l'adresse suivante : \url{https://h-quiz.heig-vd.site/}. À noter que ce nom de domaine n'appartient pas à la HEIG-VD.
+\section{Déploiement}
+Pour s'assurer du bon fonctionnement du projet et vérifier que les fonctionnalités ne se limitent pas à un environnement local, il est essentiel de le déployer. Le projet est actuellement déployé à l'adresse suivante : \url{https://h-quiz.heig-vd.site/}. À noter que ce nom de domaine n'appartient pas à la HEIG-VD. Actuellement, le site est utilisable et il est possible de s'y connecter avec son compte de la HEIG-VD.
+
+Cependant, pami les informations transmises par le serveur keycloak ne permettant pas de différencier un étudiant d'un professeur. Actuellement, chaque utilisateur est considéré comme un enseignant. Une demande a été faite afin que cette information puisse être ajoutée. Si cela ne s'avère pas réalisable, une autre approche serait de maintenir une liste d'e-mails appartenant aux enseignants et au personnel de l'école. A chaque connexion, l'application vérifierait ainsi si l'utilisateur est dans la liste.
+
+\section{CI/CD}
+\subsection{Tests}
+Dans le cadre de ce projet, seuls les tests du \emph{backend} de l'application ont été effectués. Bien que des tests du \emph{frontend} soient envisageables, il a été jugé que cela nécessiterait un temps trop considérable.
+
+Laravel propose deux types de tests bien distincts : les \emph{Unit test} et les \emph{feature test}. Les premiers se concentrent sur de toutes petites fonctionnalités du code, comme des méthodes. En revanche, les \emph{feature tests} permettent de tester des parties plus vastes du code, comme une route de l'API. Dans ce projet, les \emph{feature tests} ont été privilégiés, étant donné que l'API ne présente pas d'unités de code particulièrement adaptées au \emph{unit testing}.
+
+Des tests ont donc été rédigés afin de tester le comportement général de l'application. Principalement pour tester l'accès à des routes protégées mais également afin de tester la logique de certains \emph{Controller}. Il faudrait cependant ajouter des tests afin que tous les \emph{Controller} soient tester.
+
+\subsection{Github actions}
+Grâce aux \emph{github actions}, il est possible de lancer automatiquement les tests de Laravel après un \emph{push} ou une \emph{Pull request} sur certaines branche. Cette approche garantit la détection rapide de toute modification susceptible de compromettre le bon fonctionnement de l'application. De plus, lors de travaux d'équipes, ce genre d'outils est indispensable.
+
+Voici la \emph{github action} qui lance les tests de manière automatique :
+
+\begin{listing}[H]
+    \inputminted{yaml}{assets/code/laravelCI.yaml}
+    \caption{Github action lançant les tests automatiques}
+\end{listing}
+
+Dans les première lignes, on peut voir que ces tests ne sont effectués que lors d'un \emph{push} sur la branche \emph{main} ou d'une \emph{Pull request} sur la branche sur cette dernière. Cette approche vise à empêcher tout code défaillant d'être poussé sur la branche principale. Ensuite, les dépendances sont installées, puis une base de données sqlite est configurée et les tests sont exécutés.
+Cette \emph{GitHub Action} simple, mais efficace permet de vérifier que l'application reste fonctionnelle lors de l'intégration de nouvelles fonctionnalités dans la branche \emph{main}.
+
+Le pipeline de \emph{CI/CD} comprend également une deuxième \emph{github action} plus complexe qui gère le de \emph{build} le déploiement automatique sur un serveur de production.
+
+\begin{listing}[H]
+    \inputminted{yaml}{assets/code/deployCD.yaml}
+    \caption{Déploiement automatique}
+\end{listing}
+
+Cette \emph{github action} n'est effectuée uniquement lors de \emph{push} sur la branches \emph{main}.
+
+En premier lieu, elle installe toutes les dépendances du \emph{frontend} et procède au \emph{build} de ce dernier. Une fois cette étape terminée, la \emph{github action} va déplacer les fichier résultant du \emph{build} dans le dossier \emph{api-backend/public}.
+Elle installe, par la suite toutes les dépendances liées aux \emph{backend} pour finalement déployer les fichiers à l'aide de \emph{rsync} sur le serveur de production.
+
+Remarquons que les variables \emph{remote\_path, remote\_host, remote\_user} et \emph{remote\_key} ne sont pas définies en clair dans le fichier. En effet, cela constituerait une faille de sécurité majeure et des personnes mal intétionnée aurait accès au serveur.
+On utilise donc les \emph{github secrets} afin d'y stocker ces informations sensibles. Il est nécessaire de configurer correctement ces valeurs, sans quoi le déploiement automatique ne marcherait pas.
+
+Ces deux \emph{GitHub Actions} constituent donc notre \emph{pipeline CI/CD}, garantissant la vérification et le déploiement automatique de l'application.
